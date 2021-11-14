@@ -1,0 +1,82 @@
+import { Ward } from "./Ward.entity";
+import { Gender } from "./Gender.entity";
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
+import { UserAccount } from "./UserAccount.entity";
+import { PatientSchedule } from "./PatientSchedule.entity";
+
+@Entity()
+export class PatientRecord {
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
+
+  @Column({ type: "nvarchar", length: 20, nullable: false })
+  firstName!: string;
+
+  @Column({ type: "nvarchar", length: 20, nullable: true })
+  middleName!: string;
+
+  @Column({ type: "varchar", length: 20, nullable: false })
+  lastName!: string;
+
+  @Column({
+    type: "varchar",
+    length: 10,
+    nullable: false,
+  })
+  phoneNumber!: string;
+
+  @Column({
+    type: "varchar",
+    length: 64,
+    nullable: true,
+  })
+  emailAddress!: string;
+
+  @Column({
+    type: "varchar",
+    length: 12,
+    nullable: false,
+    unique: true,
+  })
+  citizenIdentification!: string;
+
+  @Column({
+    type: "date",
+    nullable: false,
+  })
+  birthday!: Date;
+
+  @Column({ type: "int", width: 3 })
+  age!: number;
+
+  @Column({ type: "nvarchar", length: 32, nullable: false })
+  job!: string;
+
+  @Column({ type: "nvarchar", length: 200 })
+  address!: string;
+
+  @ManyToOne(() => UserAccount, (user) => user.patientRecord)
+  userAccount!: UserAccount;
+
+  @OneToOne(() => Gender)
+  @JoinColumn()
+  gender!: Gender;
+
+  @OneToOne(() => Ward)
+  @JoinColumn()
+  ward!: Ward;
+
+  @OneToMany(
+    () => PatientSchedule,
+    (patientChedule) => patientChedule.patientRecord
+  )
+  patientSchedule!: PatientSchedule[];
+}

@@ -1,0 +1,72 @@
+{
+  "name": "doctors_admin_crud",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts, html",
+    "ignore": [
+      "src/public"
+    ],
+    "exec": "./node_modules/.bin/ts-node ./src"
+  },
+  "_moduleAliases": {
+    "@entity": "dist/entity",
+    "@dals": "dist/dals",
+    "@models": "dist/models",
+    "@controllers": "dist/controllers",
+    "@routers": "dist/routers",
+    "@shared": "dist/shared",
+    "@server": "dist/server",
+    "@instances": "dist/instances"
+  },
+  "author": "Lam Son Hai",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.7",
+    "command-line-args": "^5.2.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "http-status-codes": "^2.1.4",
+    "install": "^0.13.0",
+    "jet-logger": "^1.0.6",
+    "morgan": "^1.10.0",
+    "mssql": "^7.2.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
+    "reflect-metadata": "^0.1.10",
+    "socketio": "^1.0.0",
+    "tedious": "^14.0.0",
+    "typeorm": "0.2.40"
+  },
+  "devDependencies": {
+    "@types/command-line-args": "^5.2.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/http-status-codes": "^1.2.0",
+    "@types/morgan": "^1.9.3",
+    "@types/mssql": "^7.1.4",
+    "@types/node": "^8.0.29",
+    "@types/socket.io": "^3.0.2",
+    "@types/tedious": "^4.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
+    "ts-node": "3.3.0",
+    "typescript": "3.3.3333"
+  }
+}
