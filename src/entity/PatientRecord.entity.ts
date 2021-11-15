@@ -9,7 +9,7 @@ import {
   JoinColumn,
   OneToMany,
 } from "typeorm";
-import { UserAccount } from "./UserAccount.entity";
+import { User } from "./User.entity";
 import { PatientSchedule } from "./PatientSchedule.entity";
 
 @Entity()
@@ -63,8 +63,8 @@ export class PatientRecord {
   @Column({ type: "nvarchar", length: 200 })
   address!: string;
 
-  @ManyToOne(() => UserAccount, (user) => user.patientRecord)
-  userAccount!: UserAccount;
+  @ManyToOne(() => User, (user) => user.patientRecord)
+  userAccount!: User;
 
   @OneToOne(() => Gender)
   @JoinColumn()

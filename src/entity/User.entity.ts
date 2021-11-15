@@ -11,7 +11,7 @@ import { PatientRecord } from "./PatientRecord.entity";
 import { Role } from "./Role.entity";
 
 @Entity()
-export class UserAccount {
+export class User {
   @PrimaryGeneratedColumn("uuid", { name: "user_id" })
   id!: string;
 
