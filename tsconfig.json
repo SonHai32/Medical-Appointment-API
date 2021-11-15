@@ -20,7 +20,8 @@
       "@routers/*": ["src/routers/*"],
       "@shared/*": ["src/shared/*"],
       "@server": ["src/server"],
-      "@instances/*": ["src/instances/*"]
+      "@instances/*": ["src/instances/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["src/**/*.ts"]

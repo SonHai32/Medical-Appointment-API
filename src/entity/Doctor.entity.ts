@@ -1,3 +1,4 @@
+import { PatientSchedule } from './PatientSchedule.entity';
 import { Gender } from "./Gender.entity";
 import { Ward } from "./Ward.entity";
 import {
@@ -6,6 +7,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
 } from "typeorm";
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
@@ -76,4 +78,7 @@ export class Doctor {
   @ManyToMany(() => AcademicRank)
   @JoinTable()
   academicRank!: AcademicRank[];
+
+  @OneToMany(() => PatientSchedule, patientSchedule => patientSchedule.doctor)
+  patientSchedules!: PatientSchedule[]
 }
