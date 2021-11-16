@@ -1,8 +1,8 @@
+import { dateToSqlDatetimeFormat } from "../utils/format.utils";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   OneToOne,
   JoinColumn,
   OneToMany,
@@ -12,11 +12,11 @@ import { Role } from "./Role.entity";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn("uuid", { name: "user_id" })
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column({ type: "nvarchar", length: 50, nullable: false })
-  fullname!: string;
+  fullname: string = "";
 
   @Column({
     type: "varchar",
@@ -24,7 +24,7 @@ export class User {
     unique: true,
     nullable: false,
   })
-  phoneNumber!: string;
+  phoneNumber: string = "";
 
   @Column({
     type: "varchar",
@@ -32,7 +32,7 @@ export class User {
     unique: true,
     nullable: false,
   })
-  emailAdress!: string;
+  emailAdress: string = "";
 
   @Column({
     type: "varchar",
@@ -40,21 +40,40 @@ export class User {
     unique: true,
     nullable: false,
   })
-  username!: string;
+  username: string = "";
 
   @Column({ type: "varchar", length: 64, nullable: false })
-  password!: string;
+  password: string = "";
 
-  @Column({ type: "datetime", nullable: false })
-  dateCreated!: Date;
+  @Column({
+    type: "datetime",
+    nullable: false,
+    default: dateToSqlDatetimeFormat(new Date()),
+  })
+  createdAt: Date = new Date();
 
   @Column({ type: "boolean", default: true, nullable: false })
-  active!: number;
+  active: boolean = true;
 
   @OneToOne(() => Role)
-  @JoinColumn()
   role!: Role;
 
   @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.userAccount)
   patientRecord!: PatientRecord[];
+
+  constructor(
+    fullname: string,
+    phoneNumber: string,
+    emailAddress: string,
+    username: string,
+    password: string,
+    role: Role
+  ) {
+    this.fullname = fullname;
+    this.phoneNumber = phoneNumber;
+    this.emailAdress = emailAddress;
+    this.username = username;
+    this.password = password;
+    this.role = role;
+  }
 }
