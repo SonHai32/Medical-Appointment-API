@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -16,7 +16,7 @@
       "@controllers/*": ["src/controllers/*"],
       "@entity/*": ["src/entity/*"],
       "@models/*": ["src/models/*"],
-      "@dals /*": ["src/dals/*"],
+      "@dals/*": ["src/dals/*"],
       "@routers/*": ["src/routers/*"],
       "@shared/*": ["src/shared/*"],
       "@server": ["src/server"],
