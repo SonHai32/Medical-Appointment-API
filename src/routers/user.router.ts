@@ -1,32 +1,19 @@
-import { UserInsert } from "../controllers/User.controller";
-import { getRepository, InsertResult } from "typeorm";
-import { User } from "./../entity/User.entity";
-import { Request, Response } from "express";
-import { Role } from "../entity/Role.entity";
+import {
+  _deleteUsers,
+  _getAllUser,
+  _getUserDetail,
+  _insertUser,
+  _updateUserDetail,
+  _updateUserPassword,
+} from "../controllers/User.controller";
+import { Router } from "express";
 
-export const _Insert = async (req: Request, res: Response) => {
-  try {
-    const { fullname, phoneNumber, emailAddress, username, password } =
-      req.body;
-    const role = await getRepository(Role)
-      .createQueryBuilder("role")
-      .where("role.id =:id", { id: 1 })
-      .getOne();
-    if (role) {
-      const user = new User(
-        fullname,
-        phoneNumber,
-        emailAddress,
-        username,
-        password,
-        role
-      );
-      const result: InsertResult | undefined = await UserInsert(user);
-      if (result) {
-        res.status(200).json({ result: result.raw });
-      }
-    } else throw new Error("role not found in database");
-  } catch (error) {
-    res.status(401).json({ message: (error as Error).message });
-  }
-};
+const router = Router();
+
+router.route("/").get(_getAllUser); //Middleware Authorizaton, Admin role
+router.route("/:id").get(_getUserDetail); //Middleware Authorizaton, Admin role
+router.route("/").post(_insertUser); //Middleware Auththorization
+router.route("/detail").patch(_updateUserDetail); //Middleware Auththorization
+router.route("/password").patch(_updateUserPassword); //Middleware Auththorization
+router.route("/").delete(_deleteUsers);
+export default router; //Middleware Authorizaton, Admin role

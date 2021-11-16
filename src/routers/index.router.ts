@@ -1,6 +1,6 @@
-import { _Insert } from './user.router';
 import { Router } from "express";
+import userRouter from './user.router'
 
-const router = Router();
-router.route('/user').post(_Insert)
+const router = Router()
+router.use('/user', userRouter)
 export default router
