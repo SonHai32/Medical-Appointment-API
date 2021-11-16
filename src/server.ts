@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(helmet());
 }
 
-app.use("api", router);
+app.use("/api", router);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   logger.err(error, true);
