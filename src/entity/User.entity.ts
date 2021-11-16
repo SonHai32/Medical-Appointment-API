@@ -32,7 +32,7 @@ export class User {
     unique: true,
     nullable: false,
   })
-  emailAdress: string = "";
+  emailAddress: string = "";
 
   @Column({
     type: "varchar",
@@ -71,7 +71,7 @@ export class User {
   ) {
     this.fullname = fullname;
     this.phoneNumber = phoneNumber;
-    this.emailAdress = emailAddress;
+    this.emailAddress = emailAddress;
     this.username = username;
     this.password = password;
     this.role = role;
