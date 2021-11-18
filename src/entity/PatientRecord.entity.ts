@@ -67,11 +67,9 @@ export class PatientRecord {
   userAccount!: User;
 
   @OneToOne(() => Gender)
-  @JoinColumn()
   gender!: Gender;
 
   @OneToOne(() => Ward)
-  @JoinColumn()
   ward!: Ward;
 
   @OneToMany(
