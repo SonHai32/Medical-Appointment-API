@@ -1,22 +1,13 @@
-import {
-  deleteUsers,
-  getAllUser,
-  getUserDetail,
-  userLogin,
-} from "./../dals/User.dal";
 import { getRepository, InsertResult, UpdateResult } from "typeorm";
 import bcrypt from "bcrypt";
 import { User } from "./../entity/User.entity";
 import { Request, Response } from "express";
 import { Role } from "../entity/Role.entity";
 import statusCodes from "http-status-codes";
-import {
-  insertUser,
-  updateUserDetail,
-  updateUserPassword,
-} from "../dals/User.dal";
+import { UserDao } from "../daos/User.dao";
 
 const { BAD_REQUEST, OK, FORBIDDEN } = statusCodes;
+const userDao = new UserDao();
 
 export const _insertUser = async (req: Request, res: Response) => {
   try {
@@ -42,7 +33,7 @@ export const _insertUser = async (req: Request, res: Response) => {
               encrypted,
               role
             );
-            const result: InsertResult | undefined = await insertUser(user);
+            const result: InsertResult | undefined = await userDao.add(user);
             if (result) {
               res
                 .status(200)
@@ -63,13 +54,17 @@ export const _updateUserDetail = async (
 ): Promise<void> => {
   try {
     const { fullname, phoneNumber, emailAddress, id } = req.body;
-    const result: UpdateResult = await updateUserDetail(
+    const result: UpdateResult = await userDao.updateDetail(
       fullname,
       emailAddress,
       phoneNumber,
       id
     );
-    res.status(OK).json({ status: "SUCCESS", message: "success" });
+    if (result.affected) {
+      res.status(OK).json({ status: "SUCCESS", message: "success" });
+    } else {
+      throw new Error("Update fail");
+    }
   } catch (error) {
     res
       .status(BAD_REQUEST)
@@ -91,10 +86,8 @@ export const _updateUserPassword = async (
           if (err) {
             throw err;
           } else {
-            const result: UpdateResult | undefined = await updateUserPassword(
-              id,
-              encrypted
-            );
+            const result: UpdateResult | undefined =
+              await userDao.changePassword(id, encrypted);
             if (result) {
               res.status(OK).json({
                 status: "success",
@@ -117,7 +110,7 @@ export const _getAllUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const users: User[] | undefined = await getAllUser();
+    const users: User[] | undefined = await userDao.getAll();
     if (users) {
       res.status(OK).json({ status: "SUCCESS", users });
     } else {
@@ -134,7 +127,7 @@ export const _getAllUser = async (
 export const _getUserDetail = async (req: Request, res: Response) => {
   try {
     const id = req.body.id || req.query.id || req.params.id;
-    const user: User | undefined = await getUserDetail(id);
+    const user: User | undefined = await userDao.getOne(id);
     if (user) {
       res.status(OK).json({ status: "SUCCESS", user });
     } else {
@@ -155,8 +148,8 @@ export const _getUserDetail = async (req: Request, res: Response) => {
 export const _deleteUsers = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.listID;
-    const result = await deleteUsers(listID);
-    if (result.affected) {
+    const result = await userDao.delete(listID);
+    if (result) {
       res
         .status(OK)
         .json({ message: `${result.affected} users has been deleted` });
@@ -171,7 +164,7 @@ export const _deleteUsers = async (req: Request, res: Response) => {
 export const _userLogin = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
-    const user: User | undefined = await userLogin(username, password);
+    const user: User | undefined = await userDao.login(username, password);
     if (user) {
       res.status(OK).json({ user });
       // JWT Token will be add later
@@ -182,3 +175,12 @@ export const _userLogin = async (req: Request, res: Response) => {
     res.status(FORBIDDEN).json({ message: (error as Error).message });
   }
 };
+
+export const addPatientRecord = async(req: Request, res: Response) =>{
+  try {
+    // const user = req.body.user
+    // const patientRecord 
+  } catch (error) {
+   res.status(BAD_REQUEST).json({message: (error as Error).message})
+  }
+}

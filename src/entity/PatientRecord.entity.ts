@@ -64,7 +64,7 @@ export class PatientRecord {
   address!: string;
 
   @ManyToOne(() => User, (user) => user.patientRecord)
-  userAccount!: User;
+  user!: User;
 
   @OneToOne(() => Gender)
   gender!: Gender;
