@@ -5,6 +5,9 @@ export class Specialist {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ type: "nvarchar", length: 64 })
+  @Column({ type: "nvarchar", length: 64, nullable: false, unique: true })
   name!: string;
+
+  @Column({ type: "float", nullable: false })
+  price!: number;
 }

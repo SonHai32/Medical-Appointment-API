@@ -17,17 +17,6 @@
     ],
     "exec": "./node_modules/.bin/ts-node ./src"
   },
-  "_moduleAliases": {
-    "@entity": "dist/entity",
-    "@dals": "dist/dals",
-    "@models": "dist/models",
-    "@controllers": "dist/controllers",
-    "@routers": "dist/routers",
-    "@shared": "dist/shared",
-    "@server": "dist/server",
-    "@instances": "dist/instances",
-    "@utils": "dist/utils"
-  },
   "author": "Lam Son Hai",
   "license": "MIT",
   "private": true,

@@ -1,0 +1,23 @@
+TODO CREATE CONTROLLER
+AcademicRank
+COUTER
+District
+Doctor
+DoctorAccount
+Gender
+Hospital
+Invoice
+InvoiceDetail
+Nation
+>PatientRecord
+PatientRelative
+PatientSchedule
+PaymentMethod
+Province
+Role
+Room
+Shift
+Specialist
+SpecialistPrice
+>User
+Ward

@@ -2,10 +2,10 @@ import { Doctor } from "./Doctor.entity";
 import {
   JoinColumn,
   OneToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Column, Entity } from "typeorm";
+import { dateToSqlDatetimeFormat } from "../utils/format.utils";
 @Entity()
 export class DoctorAccount {
   @PrimaryGeneratedColumn("uuid")
@@ -15,10 +15,17 @@ export class DoctorAccount {
   username!: string;
 
   @Column({ type: "varchar", length: 64, nullable: false })
-  password!: String;
+  password!: string;
 
-  @Column({ type: "date", nullable: false })
+  @Column({
+    type: "date",
+    nullable: false,
+    default: dateToSqlDatetimeFormat(new Date()),
+  })
   createdAt!: Date;
+
+  @Column({ type: "boolean", nullable: false, default: false })
+  active!: boolean;
 
   @OneToOne(() => Doctor)
   @JoinColumn()

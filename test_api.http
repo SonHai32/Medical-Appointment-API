@@ -1,0 +1,48 @@
+PATCH  http://localhost:3000/api/user/password
+Content-Type: application/json
+
+{
+    "password": "1222222$a",
+    "id": "9117641f-0362-4555-b086-8c6aa9d4b237"
+}
+
+
+###
+
+
+GET http://localhost:3030/api/user/9117641f-0362-4555-b086-8c6aa9d4b237
+# ooooooooooooooooooo  => patient record id 
+
+###
+
+GET http://localhost:3030/api/patient-record/ooooooooooooooooooo
+
+###
+PATCH  http://localhost:3030/api/patient-record
+Content-Type: application/json
+
+{
+
+  
+"patientRecord":{
+    "firstName": "dfsfd",
+    "middleName": "son",
+    "lastName": "hii",
+    "phoneNumber": "sdfsdfd",
+    "emailAddress": "dasdsadas",
+    "citizenIdentification": "sssssss",
+    "birthday": "2000-03-02",
+    "age": 20,
+    "job": "asdas",
+    "address": "asdas",
+"user": {
+    "fullname": "asdasdsad",
+    "phoneNumber": "dsadsadsad",
+    "emailAddress": "dsadsadsad",
+    "username": "sdsdasdasda",
+    "createdAt": "2021-11-16T07:06:40.000Z",
+    "active": true,
+    "id": "d9e90628-f369-4d98-9a8c-eaed17b612de"
+  }
+}
+}

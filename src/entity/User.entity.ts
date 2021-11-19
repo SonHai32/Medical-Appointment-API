@@ -58,7 +58,7 @@ export class User {
   @OneToOne(() => Role)
   role!: Role;
 
-  @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.userAccount)
+  @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.user)
   patientRecord!: PatientRecord[];
 
   constructor(

@@ -10,6 +10,7 @@ import {
 } from "typeorm";
 import { Room } from "./Room.entity";
 import { Doctor } from "./Doctor.entity";
+import { SpecialistPrice } from "./SpecialistPrice.entity";
 
 @Entity()
 export class Hospital {
@@ -28,4 +29,7 @@ export class Hospital {
 
   @OneToMany(() => Doctor, (doctor) => doctor.hospital)
   doctors!: Doctor[];
+
+  @OneToMany(() => SpecialistPrice, specialistPrice => specialistPrice.specialist)
+  specialistPrice!: SpecialistPrice[]
 }

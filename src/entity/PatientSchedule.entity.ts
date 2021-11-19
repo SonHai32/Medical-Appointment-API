@@ -28,6 +28,9 @@ export class PatientSchedule {
   @Column({ type: "boolean", nullable: false, default: true })
   active!: boolean;
 
+  @Column({ type: "nvarchar", length: "300", nullable: true })
+  healthStatus!: string;
+
   @ManyToOne(
     () => PatientRecord,
     (patientRecord) => patientRecord.patientSchedule
