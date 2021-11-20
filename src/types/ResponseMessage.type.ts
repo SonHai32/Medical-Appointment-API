@@ -6,4 +6,6 @@ export enum ResponseMessage {
   GET_FAIL = "Document get fail",
   DELETE_SUCCESS = "Document delete success",
   DELETE_FAIL = "Document delete fail",
+  LOGIN_SUCCESS = "Login success",
+  LOGIN_FAIL = "Login fail"
 }

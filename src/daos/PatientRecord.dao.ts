@@ -24,8 +24,8 @@ export class PatientRecordDao implements IPatientRecordDao {
     });
   }
 
-  getOne(recordID: string): Promise<PatientRecord | undefined> {
-    return getRepository(PatientRecord).findOne({ id: recordID });
+  getOne(id: string): Promise<PatientRecord | undefined> {
+    return getRepository(PatientRecord).findOne({ id });
   }
 
   update(patientRecord: PatientRecord): Promise<UpdateResult> | undefined {

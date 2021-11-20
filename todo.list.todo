@@ -1,17 +1,17 @@
 TODO CREATE CONTROLLER
-AcademicRank
-COUTER
-District
-Doctor
-DoctorAccount
-Gender
-Hospital
-Invoice
-InvoiceDetail
-Nation
+> AcademicRank
+>COUNTRY
+>District
+>Doctor
+>DoctorAccount
+>Gender
+>Hospital
+>Invoice
+>InvoiceDetail
+>Nation
 >PatientRecord
 PatientRelative
-PatientSchedule
+>PatientSchedule
 PaymentMethod
 Province
 Role

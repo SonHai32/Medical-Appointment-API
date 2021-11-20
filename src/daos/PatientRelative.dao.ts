@@ -11,7 +11,6 @@ export interface IPatientRelativeDao {
     PatientRelative: PatientRelative
   ) => Promise<UpdateResult> | undefined;
   delete: (id: string) => Promise<DeleteResult> | undefined;
-
 }
 
 export class PatientRetriveDao implements IPatientRelativeDao {
