@@ -1,5 +1,5 @@
-TODO CREATE CONTROLLER
-> AcademicRank
+TODO 
+>>AcademicRank
 >COUNTRY
 >District
 >Doctor
@@ -12,12 +12,12 @@ TODO CREATE CONTROLLER
 >PatientRecord
 PatientRelative
 >PatientSchedule
-PaymentMethod
-Province
-Role
-Room
-Shift
-Specialist
-SpecialistPrice
+>PaymentMethod
+>Province
+>Role
+>Room
+>Shift
+>Specialisy
+>SpecialistPrice
 >User
-Ward
+>Ward
