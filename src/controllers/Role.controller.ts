@@ -1,8 +1,8 @@
 import { RoleDao } from "./../daos/Role.dao";
 import { Request, Response } from "express";
 import statusCodes from "http-status-codes";
-import { Role } from "src/entity/Role.entity";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { Role } from "../entity/Role.entity";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const roleDao = new RoleDao();

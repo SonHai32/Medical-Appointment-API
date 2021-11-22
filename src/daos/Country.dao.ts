@@ -1,4 +1,4 @@
-import { Country } from "src/entity/Country.entity";
+import { Country } from "../entity/Country.entity";
 import { getRepository } from "typeorm";
 
 export interface ICountryDao {

@@ -1,5 +1,5 @@
 import { DeleteResult, UpdateResult } from "typeorm";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 import { PaymentMethod } from "./../entity/PaymentMethod.entity";
 import { PaymentMethodDao } from "./../daos/PaymentMethod.dao";
 import { Request, Response } from "express";
@@ -57,7 +57,7 @@ export const _update = async (req: Request, res: Response) => {
     const result: UpdateResult | undefined = await paymentMethodDao.update(
       paymentMethod
     );
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.UPDATE_FAIL);
@@ -73,7 +73,7 @@ export const _delete = async (req: Request, res: Response) => {
     const result: DeleteResult | undefined = await paymentMethodDao.delete(
       listID
     );
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

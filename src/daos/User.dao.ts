@@ -67,7 +67,9 @@ export class UserDao implements IUserDao {
   public getAll(): Promise<User[]> | undefined {
     try {
       return getRepository(User).find();
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
 
   public getOne(id: string): Promise<User | undefined> {

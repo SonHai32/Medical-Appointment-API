@@ -1,5 +1,5 @@
 import { DeleteResult, UpdateResult } from "typeorm";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 import { DoctorAccount } from "./../entity/DoctorAccount.entity";
 import { Request, Response } from "express";
 import { DoctorAccountDao } from "./../daos/DoctorAccount.dao";
@@ -75,7 +75,7 @@ export const _delete = async (req: Request, res: Response) => {
     const result: DeleteResult | undefined = await doctorAccountDao.delete(
       listID
     );
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

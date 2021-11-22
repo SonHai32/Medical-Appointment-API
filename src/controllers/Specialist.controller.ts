@@ -57,7 +57,7 @@ export const _update = async (req: Request, res: Response) => {
     const result: UpdateResult | undefined = await specialistDao.update(
       specialist
     );
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.UPDATE_SUCCESS);
@@ -71,7 +71,7 @@ export const _delete = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.data;
     const result: DeleteResult | undefined = await specialistDao.delete(listID);
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Gender } from "src/entity/Gender.entity";
+import { Gender } from "../entity/Gender.entity";
 
 export interface IGenderDao {
   getAll: () => Promise<Gender[]> | undefined;

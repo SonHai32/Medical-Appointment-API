@@ -1,8 +1,8 @@
 import { SpecialistPriceDao } from "./../daos/SpecialistPrice.dao";
 import { Request, Response } from "express";
 import statusCodes from "http-status-codes";
-import { SpecialistPrice } from "src/entity/SpecialistPrice.entity";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { SpecialistPrice } from "../entity/SpecialistPrice.entity";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const specialistPriceDao = new SpecialistPriceDao();

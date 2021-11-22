@@ -1,8 +1,8 @@
-import { Country } from "src/entity/Country.entity";
+import { Country } from "../entity/Country.entity";
 import { Request, Response } from "express";
 import { CountryDao } from "./../daos/Country.dao";
 import statusCodes from "http-status-codes";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const countryDao = new CountryDao();

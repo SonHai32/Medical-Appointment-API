@@ -2,7 +2,7 @@ import { Nation } from "./../entity/Nation.entity";
 import { NationDao } from "./../daos/Nation.dao";
 import statusCodes from "http-status-codes";
 import { Request, Response } from "express";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const nationDao = new NationDao();

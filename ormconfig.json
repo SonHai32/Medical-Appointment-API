@@ -1,17 +1,17 @@
 {
   "type": "mysql",
-  "host": "192.168.1.12",
+  "host": "192.168.1.10",
   "port": 3306,
   "username": "sonhai",
   "password": "hhsh06070302",
   "database": "ql_dat_lich_kham_benh",
   "synchronize": true,
   "logging": false,
-  "entities": ["src/entity/**/*.ts"],
+  "entities": ["**/src/entity/*{.ts,.js}"],
   "migrations": ["src/migration/**/*.ts"],
   "subscribers": ["src/subscriber/**/*.ts"],
   "cli": {
-    "entitiesDir": "src/entity",
+    "entitiesDir": "../entity",
     "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
   }

@@ -3,7 +3,7 @@ import { User } from "./../entity/User.entity";
 import { Request, Response } from "express";
 import statusCodes from "http-status-codes";
 import { UserDao } from "../daos/User.dao";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK, FORBIDDEN } = statusCodes;
 const userDao = new UserDao();

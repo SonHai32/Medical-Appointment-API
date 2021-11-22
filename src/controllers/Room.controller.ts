@@ -3,7 +3,7 @@ import { Room } from "./../entity/Room.entity";
 import { RoomDao } from "./../daos/Room.dao";
 import { Request, Response } from "express";
 import statusCodes from "http-status-codes";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const roomDao = new RoomDao();
@@ -53,7 +53,7 @@ export const _update = async (req: Request, res: Response) => {
   try {
     const room: Room = req.body.data;
     const result: UpdateResult | undefined = await roomDao.update(room);
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.UPDATE_FAIL);
@@ -67,7 +67,7 @@ export const _delete = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.data;
     const result: DeleteResult | undefined = await roomDao.delete(listID);
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

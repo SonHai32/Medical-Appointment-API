@@ -2,7 +2,7 @@ import { PatientRecord } from './../entity/PatientRecord.entity';
 import { PatientRetriveDao } from "./../daos/PatientRelative.dao";
 import { Request, Response } from "express";
 import statusCode from "http-status-codes";
-import { PatientRelative } from 'src/entity/PatientRelative.entity';
+import { PatientRelative } from '../entity/PatientRelative.entity';
 
 const { BAD_REQUEST, OK } = statusCode;
 const patientRelativeDao = new PatientRetriveDao();

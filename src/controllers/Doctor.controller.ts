@@ -1,5 +1,5 @@
 import { DeleteResult, UpdateResult } from "typeorm";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 import { Doctor } from "./../entity/Doctor.entity";
 import { DoctorDao } from "./../daos/Doctor.dao";
 import statusCodes from "http-status-codes";
@@ -53,7 +53,7 @@ export const _update = async (req: Request, res: Response) => {
   try {
     const doctor: Doctor = req.body.data;
     const result: UpdateResult | undefined = await doctorDao.update(doctor);
-    if (result?.raw) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.UPDATE_FAIL);
@@ -67,7 +67,7 @@ export const _delete = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.data;
     const result: DeleteResult | undefined = await doctorDao.delete(listID);
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

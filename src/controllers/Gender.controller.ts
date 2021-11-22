@@ -1,5 +1,5 @@
-import { ResponseMessage } from "src/types/ResponseMessage.type";
-import { Gender } from "src/entity/Gender.entity";
+import { ResponseMessage } from "../types/ResponseMessage.type";
+import { Gender } from "../entity/Gender.entity";
 import { GenderDao } from "./../daos/Gender.dao";
 import statusCodes from "http-status-codes";
 import { Request, Response } from "express";

@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Province } from "src/entity/Province.entity";
+import { Province } from "../entity/Province.entity";
 
 export interface IProvinceDao {
   getAll: () => Promise<Province[]> | undefined;

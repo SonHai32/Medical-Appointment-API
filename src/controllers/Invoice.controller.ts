@@ -1,4 +1,4 @@
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 import { InvoiceDao } from "./../daos/Invoice.dao";
 import { Invoice } from "./../entity/Invoice.entity";
 import { Request, Response } from "express";

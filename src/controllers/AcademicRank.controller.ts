@@ -1,9 +1,9 @@
 import { DeleteResult, UpdateResult } from "typeorm";
 import { Request, Response } from "express";
-import { AcademicRankDao } from "src/daos/AcademicRank.dao";
-import { AcademicRank } from "src/entity/AcademicRank.entity";
+import { AcademicRankDao } from "../daos/AcademicRank.dao";
+import { AcademicRank } from "../entity/AcademicRank.entity";
 import httpStatusCodes from "http-status-codes";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const academicRankDao = new AcademicRankDao();
 const { BAD_REQUEST, OK } = httpStatusCodes;
@@ -44,7 +44,7 @@ export const _update = async (req: Request, res: Response) => {
     const result: UpdateResult | undefined = await academicRankDao.update(
       academicRank
     );
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json(ResponseMessage.UPDATE_SUCCESS);
     } else {
       throw new Error(ResponseMessage.UPDATE_FAIL);
@@ -60,7 +60,7 @@ export const _delete = async (req: Request, res: Response) => {
     const result: DeleteResult | undefined = await academicRankDao.delete(
       listID
     );
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

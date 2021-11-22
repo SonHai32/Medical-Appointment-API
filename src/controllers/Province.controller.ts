@@ -2,7 +2,7 @@ import { ResponseMessage } from './../types/ResponseMessage.type';
 import { ProvinceDao } from "./../daos/Province.dao";
 import { Request, Response } from "express";
 import statusCodes from "http-status-codes";
-import { Province } from "src/entity/Province.entity";
+import { Province } from "../entity/Province.entity";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const provinceDao = new ProvinceDao();

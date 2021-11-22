@@ -2,8 +2,8 @@ import { DeleteResult, UpdateResult } from "typeorm";
 import { Shift } from "./../entity/Shift.entitty";
 import { Request, Response } from "express";
 import statusCode from "http-status-codes";
-import { ShiftDao } from "src/daos/Shift.dao";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ShiftDao } from "../daos/Shift.dao";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 import { json } from "stream/consumers";
 
 const { BAD_REQUEST, OK } = statusCode;

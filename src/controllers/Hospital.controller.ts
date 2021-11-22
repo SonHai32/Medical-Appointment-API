@@ -3,7 +3,7 @@ import { Hospital } from "./../entity/Hospital.entity";
 import { HospitalDao } from "./../daos/Hospital.dao";
 import statusCodes from "http-status-codes";
 import { Request, Response } from "express";
-import { ResponseMessage } from "src/types/ResponseMessage.type";
+import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const { BAD_REQUEST, OK } = statusCodes;
 const hospitalDao = new HospitalDao();
@@ -67,7 +67,7 @@ export const _delete = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.data;
     const result: DeleteResult | undefined = await hospitalDao.delete(listID);
-    if (result?.affected && result.affected > 0) {
+    if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.DELETE_FAIL);

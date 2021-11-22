@@ -7,11 +7,11 @@ export = {
   database: "ql_dat_lich_kham_benh",
   synchronize: true,
   logging: false,
-  entities: ["src/entity/**/*.ts"],
+  entities: ["../entity/**/*.ts"],
   migrations: ["src/migration/**/*.ts"],
   subscribers: ["src/subscriber/**/*.ts"],
   cli: {
-    entitiesDir: "src/entity",
+    entitiesDir: "../entity",
     migrationsDir: "src/migration",
     subscribersDir: "src/subscriber",
   },

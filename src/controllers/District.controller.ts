@@ -1,4 +1,4 @@
-import { District } from 'src/entity/District.entity';
+import { District } from '../entity/District.entity';
 import { DistrictDao } from "./../daos/District.dao";
 import statusCodes from "http-status-codes";
 import { Request, Response } from "express";
