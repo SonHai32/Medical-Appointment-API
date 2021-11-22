@@ -17,11 +17,8 @@ export class PatientRecordDao implements IPatientRecordDao {
     return getRepository(PatientRecord).save(patientRecord);
   }
 
-  getAll(userID: string): Promise<PatientRecord[]> | undefined {
-    return getRepository(PatientRecord).find({
-      relations: ["user"],
-      where: { userAccount: { id: userID } },
-    });
+  getAll(): Promise<PatientRecord[]> | undefined {
+    return getRepository(PatientRecord).find();
   }
 
   getOne(id: string): Promise<PatientRecord | undefined> {

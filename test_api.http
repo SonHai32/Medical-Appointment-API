@@ -48,4 +48,4 @@ Content-Type: application/json
 }
 
 ###
-GET  http://localhost:3030/api/user
+GET  http://localhost:3030/api/patient-record
