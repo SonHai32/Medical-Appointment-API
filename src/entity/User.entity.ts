@@ -55,25 +55,6 @@ export class User {
   @Column({ type: "boolean", default: true, nullable: false })
   active: boolean = true;
 
-  @OneToOne(() => Role)
-  role!: Role;
-
   @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.user)
   patientRecord!: PatientRecord[];
-
-  constructor(
-    fullname: string,
-    phoneNumber: string,
-    emailAddress: string,
-    username: string,
-    password: string,
-    role: Role
-  ) {
-    this.fullname = fullname;
-    this.phoneNumber = phoneNumber;
-    this.emailAddress = emailAddress;
-    this.username = username;
-    this.password = password;
-    this.role = role;
-  }
 }

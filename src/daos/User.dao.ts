@@ -1,16 +1,9 @@
 import { PatientRecord } from "./../entity/PatientRecord.entity";
-import bcript from "bcrypt";
-import {
-  DeleteResult,
-  getConnection,
-  InsertResult,
-  UpdateResult,
-  getRepository,
-} from "typeorm";
+import bcrypt from "bcrypt";
+import { DeleteResult, UpdateResult, getRepository } from "typeorm";
 import { User } from "./../entity/User.entity";
 export interface IUserDao {
-  //   getRepository: () => Repository<User>;
-  add: (user: User) => Promise<InsertResult> | undefined;
+  register: (user: User) => Promise<User | undefined>;
   getAll: () => Promise<User[]> | undefined;
   getOne: (userID: string) => Promise<User | undefined>;
   delete: (listID: string[]) => Promise<DeleteResult> | undefined;
@@ -22,9 +15,10 @@ export interface IUserDao {
     userID: string
   ) => Promise<UpdateResult> | undefined;
   changePassword: (
-    newPassword: string,
-    userID: string
-  ) => Promise<UpdateResult> | undefined;
+    username: string,
+    oldPassword: string,
+    newPassword: string
+  ) => Promise<UpdateResult | undefined>;
   addPatientRecord: (
     user: string,
     patientRecord: PatientRecord
@@ -52,15 +46,19 @@ export class UserDao implements IUserDao {
       throw error;
     }
   }
-  
-  public add(user: User): Promise<InsertResult> | undefined {
+
+  public async register(user: User): Promise<User | undefined> {
     try {
-      return getConnection()
-        .createQueryBuilder()
-        .insert()
-        .into(User)
-        .values([user])
-        .execute();
+      const hashPassword = await bcrypt.hash(
+        user.password,
+        process.env.SALT_ROUNDS || 10
+      );
+      if (hashPassword) {
+        user.password = hashPassword;
+        return getRepository(User).save(user);
+      } else {
+        throw new Error("Error while encrypting password");
+      }
     } catch (error) {
       throw error;
     }
@@ -80,7 +78,6 @@ export class UserDao implements IUserDao {
           select: [
             "fullname",
             "createdAt",
-            "role",
             "emailAddress",
             "active",
             "phoneNumber",
@@ -102,47 +99,36 @@ export class UserDao implements IUserDao {
     }
   }
 
-  public login(username: string, password: string): Promise<User> {
-    return new Promise(async (reslove, reject) => {
-      try {
-        const user: User | undefined = await getRepository(User).findOne(
-          {
-            username,
-          },
-          {
-            select: [
-              "fullname",
-              "role",
-              "emailAddress",
-              "active",
-              "username",
-              "id",
-            ],
-          }
-        );
-        if (user && user.password) {
-          bcript.compare(password, user.password, (err: any, result: any) => {
-            if (err) {
-              reject(err);
-            }
-            if (result) {
-              if (!user.active) {
-                reject(new Error("User has been disabled"));
-              } else {
-                reslove(user);
-              }
-              reslove(user);
-            } else {
-              reject(new Error("Wrong password"));
-            }
-          });
-        } else {
-          reject(new Error("Username doesn't exist "));
+  public async login(username: string, password: string): Promise<User> {
+    try {
+      const user: User | undefined = await getRepository(User).findOne(
+        {
+          username,
+        },
+        {
+          select: ["fullname", "emailAddress", "active", "username", "id"],
         }
-      } catch (error) {
-        reject(error);
+      );
+      if (user) {
+        if (user.active) {
+          const isPasswordValid = await this.passwordChecking(
+            username,
+            password
+          );
+          if (isPasswordValid) {
+            return user;
+          } else {
+            throw new Error("Wrong password");
+          }
+        } else {
+          throw new Error("User has been disabled");
+        }
+      } else {
+        throw new Error("Username doesn't exist ");
       }
-    });
+    } catch (error) {
+      throw error;
+    }
   }
 
   public updateDetail = (
@@ -152,28 +138,60 @@ export class UserDao implements IUserDao {
     userID: string
   ) => {
     try {
-      return getConnection()
-        .createQueryBuilder()
-        .update(User)
-        .set({ fullname, emailAddress, phoneNumber })
-        .where("id = :id", { id: userID })
-        .execute();
+      return getRepository(User).update(
+        { id: userID },
+        { emailAddress, phoneNumber, fullname }
+      );
     } catch (error) {
       throw error;
     }
   };
 
-  public changePassword(
-    newPassword: string,
-    id: string
-  ): Promise<UpdateResult> | undefined {
+  public async changePassword(
+    username: string,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<UpdateResult | undefined> {
     try {
-      return getConnection()
-        .createQueryBuilder()
-        .update(User)
-        .set({ password: newPassword })
-        .where("id = :id", { id })
-        .execute();
+      const isPasswordValid: boolean = await this.passwordChecking(
+        username,
+        oldPassword
+      );
+      if (isPasswordValid) {
+        const newHashPassword = await bcrypt.hash(
+          newPassword,
+          process.env.SALT_ROUNDS || 10
+        );
+        if (newHashPassword) {
+          return getRepository(User).update(
+            { username },
+            { password: newHashPassword }
+          );
+        } else {
+          throw new Error("Error while encrypting password");
+        }
+      } else {
+        throw new Error("Error while checking your password");
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private async passwordChecking(
+    username: string,
+    password: string
+  ): Promise<boolean> {
+    try {
+      const user: User | undefined = await getRepository(User).findOne({
+        where: { username },
+      });
+      if (user) {
+        const isValid = await bcrypt.compare(password, user.password);
+        return isValid;
+      } else {
+        throw new Error("username does not exist");
+      }
     } catch (error) {
       throw error;
     }

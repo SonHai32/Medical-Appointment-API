@@ -1,5 +1,5 @@
 import { Router } from "express";
-import userRouter from "./user.router";
+import userRouter from "./User.router";
 import patientRecordRouter from "./patientRecord.router";
 
 const router = Router();
