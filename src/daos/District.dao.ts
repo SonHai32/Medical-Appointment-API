@@ -7,6 +7,6 @@ export interface IDistrictDao {
 
 export class DistrictDao implements IDistrictDao {
   getAll(): Promise<District[]> | undefined {
-    return getRepository(District).find();
+    return getRepository(District).find({relations: ['province']});
   }
 }

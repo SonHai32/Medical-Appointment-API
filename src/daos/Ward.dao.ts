@@ -7,6 +7,6 @@ export interface IWardDao {
 
 export class WardDao implements IWardDao {
   getAll(): Promise<Ward[]> | undefined {
-    return getRepository(Ward).find();
+    return getRepository(Ward).find({relations: ['district']});
   }
 }

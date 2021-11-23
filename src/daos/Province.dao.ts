@@ -7,6 +7,6 @@ export interface IProvinceDao {
 
 export class ProvinceDao implements IProvinceDao {
   getAll(): Promise<Province[]> | undefined {
-    return getRepository(Province).find();
+    return getRepository(Province).find({relations: ['country']});
   }
 }
