@@ -6,7 +6,7 @@ import statusCodes from "http-status-codes";
 import { cookieProps } from "./shared/constants.shared";
 import logger from "./shared/logger.shared";
 import router from "./routers/index.router";
-
+import cors from "cors";
 const app = express();
 const { BAD_REQUEST } = statusCodes;
 
@@ -16,7 +16,7 @@ const { BAD_REQUEST } = statusCodes;
 
 app.use(express.json()), app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(cookieProps.secret));
-
+app.use(cors())
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
