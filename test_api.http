@@ -48,4 +48,4 @@ Content-Type: application/json
 }
 
 ###
-GET  http://localhost:3030/api/ward
+GET  http://localhost:3030/api/ward?districtId=001HH

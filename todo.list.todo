@@ -3,6 +3,9 @@ TODO
 >>COUNTRY
 >>District
 >>Doctor
+ > getDoctorByDate
+ > getDoctorByAcademicRank
+ > getDoc
 >>DoctorAccount
 >>Gender
 >>Hospital
