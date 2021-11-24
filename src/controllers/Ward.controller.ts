@@ -9,7 +9,8 @@ const wardDao = new WardDao();
 
 export const _getAll = async (req: Request, res: Response) => {
   try {
-    const result: Ward[] | undefined = await wardDao.getAll();
+    const districtId: string | undefined = req.query.districtId as string;
+    const result: Ward[] | undefined = await wardDao.getAll(districtId);
     if (result) {
       res.status(OK).json({ data: result });
     } else {

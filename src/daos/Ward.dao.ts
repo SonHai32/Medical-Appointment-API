@@ -2,11 +2,17 @@ import { getRepository } from "typeorm";
 import { Ward } from "./../entity/Ward.entity";
 
 export interface IWardDao {
-  getAll(): Promise<Ward[]> | undefined;
+  getAll(districtId?: string): Promise<Ward[]> | undefined;
 }
 
 export class WardDao implements IWardDao {
-  getAll(): Promise<Ward[]> | undefined {
-    return getRepository(Ward).find({relations: ['district']});
+  getAll(districtId?: string): Promise<Ward[]> | undefined {
+    if (districtId) {
+      return getRepository(Ward).find({
+        relations: ["district"],
+        where: [{ district: { id: districtId } }],
+      });
+    }
+    return getRepository(Ward).find({ relations: ["district"] });
   }
 }
