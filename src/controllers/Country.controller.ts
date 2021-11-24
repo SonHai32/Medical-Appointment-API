@@ -11,7 +11,7 @@ export const _getAll = async (req: Request, res: Response) => {
   try {
     const country: Country[] | undefined = await countryDao.getAll();
     if (country) {
-      res.status(OK).json({ data: Country });
+      res.status(OK).json({ data: country });
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }
