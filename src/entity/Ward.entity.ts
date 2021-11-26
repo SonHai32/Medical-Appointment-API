@@ -1,3 +1,5 @@
+import { PatientRecord } from "./PatientRecord.entity";
+import { Hospital } from "./Hospital.entity";
 import { Entity, PrimaryColumn, Column, OneToMany, ManyToOne } from "typeorm";
 import { District } from "./District.entity";
 
@@ -11,4 +13,10 @@ export class Ward {
 
   @ManyToOne(() => District, (district) => district.ward)
   district!: District;
+
+  @OneToMany(() => Hospital, (hospital) => hospital.ward)
+  hospital!: Hospital[];
+
+  @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.ward)
+  patientRecord!: PatientRecord[];
 }

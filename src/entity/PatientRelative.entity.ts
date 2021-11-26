@@ -1,11 +1,11 @@
 import { PatientRecord } from "../entity/PatientRecord.entity";
-import { Column, OneToOne } from "typeorm";
+import { Column, JoinColumn, OneToOne } from "typeorm";
 import { PrimaryGeneratedColumn } from "typeorm";
 import { PrimaryColumn } from "typeorm";
 import { Entity } from "typeorm";
 @Entity()
 export class PatientRelative {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   id!: string;
 
   @Column({ type: "nvarchar", length: 50, nullable: false })
@@ -26,6 +26,9 @@ export class PatientRelative {
   @Column({ type: "nvarchar", length: 300, nullable: true })
   note!: string;
 
-  @OneToOne(() => PatientRecord)
+  @OneToOne(
+    () => PatientRecord,
+    (patientRecord) => patientRecord.patientRelative
+  )
   patientRecord!: PatientRecord;
 }

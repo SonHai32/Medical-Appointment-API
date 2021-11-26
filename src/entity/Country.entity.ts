@@ -1,5 +1,4 @@
 import { Entity, PrimaryColumn, Column, OneToMany } from "typeorm";
-import { Nation } from "./Nation.entity";
 import { Province } from "./Province.entity";
 @Entity()
 export class Country {
@@ -12,9 +11,6 @@ export class Country {
     nullable: false,
   })
   name!: string;
-
-  @OneToMany(() => Nation, (nation) => nation.country)
-  nation!: Nation[];
 
   @OneToMany(() => Province, (provice) => provice.country)
   province!: Province[];

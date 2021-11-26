@@ -32,7 +32,6 @@ export class Shift {
   @ManyToOne(() => Room, (room) => room.shifts)
   room!: Room;
 
-  @OneToOne(() => Doctor)
-  @JoinColumn()
+  @ManyToOne(() => Doctor, (doctor) => doctor.shifts)
   doctor!: Doctor;
 }

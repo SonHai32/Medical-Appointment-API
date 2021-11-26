@@ -1,6 +1,8 @@
+import { Service } from "./Service.entity";
+import { InvoiceDetail } from "./InvoiceDetail.entity";
 import { dateToSqlDatetimeFormat } from "../utils/format.utils";
 import { Doctor } from "./Doctor.entity";
-import { Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Entity } from "typeorm";
 import { PatientRecord } from "./PatientRecord.entity";
 
@@ -39,4 +41,13 @@ export class PatientSchedule {
 
   @ManyToOne(() => Doctor, (doctor) => doctor.patientSchedules)
   doctor!: Doctor;
+
+  @ManyToOne(
+    () => InvoiceDetail,
+    (invoiceDetail) => invoiceDetail.patientSchedule
+  )
+  invoiceDetail!: InvoiceDetail;
+
+  @OneToOne(() => Service)
+  service!: Service;
 }

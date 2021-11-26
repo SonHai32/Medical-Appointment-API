@@ -1,9 +1,6 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
-  OneToMany,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 

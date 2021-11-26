@@ -1,3 +1,4 @@
+import { PatientRelative } from "./PatientRelative.entity";
 import { Ward } from "./Ward.entity";
 import { Gender } from "./Gender.entity";
 import {
@@ -67,6 +68,7 @@ export class PatientRecord {
   user!: User;
 
   @OneToOne(() => Gender)
+  @JoinColumn()
   gender!: Gender;
 
   @OneToOne(() => Ward)
@@ -77,4 +79,9 @@ export class PatientRecord {
     (patientChedule) => patientChedule.patientRecord
   )
   patientSchedule!: PatientSchedule[];
+
+  @OneToOne(() => PatientRelative, patientRelative => patientRelative.patientRecord)
+  @JoinColumn()
+  patientRelative!: PatientRelative;
+
 }

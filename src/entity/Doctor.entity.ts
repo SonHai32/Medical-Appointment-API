@@ -1,3 +1,4 @@
+import { Shift } from './Shift.entitty';
 import { PatientSchedule } from './PatientSchedule.entity';
 import { Gender } from "./Gender.entity";
 import { Ward } from "./Ward.entity";
@@ -81,4 +82,7 @@ export class Doctor {
 
   @OneToMany(() => PatientSchedule, patientSchedule => patientSchedule.doctor)
   patientSchedules!: PatientSchedule[]
+
+  @OneToMany(() => Shift, shift => shift.doctor)
+  shifts!: Shift[]
 }

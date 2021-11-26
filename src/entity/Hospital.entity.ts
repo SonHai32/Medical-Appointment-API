@@ -1,16 +1,15 @@
+import { Specialist } from "./Specialist.entity";
 import { Ward } from "./Ward.entity";
 import {
   Entity,
   Column,
-  OneToOne,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   OneToMany,
 } from "typeorm";
 import { Room } from "./Room.entity";
 import { Doctor } from "./Doctor.entity";
-import { SpecialistPrice } from "./SpecialistPrice.entity";
+import { Service } from "./Service.entity";
 
 @Entity()
 export class Hospital {
@@ -20,8 +19,10 @@ export class Hospital {
   @Column({ type: "nvarchar", length: 64 })
   name!: string;
 
-  @OneToOne(() => Ward)
-  @JoinColumn()
+  @Column({ type: "nvarchar", length: 200 })
+  address!: string;
+
+  @ManyToOne(() => Ward, (ward) => ward.hospital)
   ward!: Ward;
 
   @OneToMany(() => Room, (room) => room.hospital)
@@ -30,6 +31,6 @@ export class Hospital {
   @OneToMany(() => Doctor, (doctor) => doctor.hospital)
   doctors!: Doctor[];
 
-  @OneToMany(() => SpecialistPrice, specialistPrice => specialistPrice.specialist)
-  specialistPrice!: SpecialistPrice[]
+  @OneToMany(() => Service, service => service.hospital)
+  services!: Service[]
 }

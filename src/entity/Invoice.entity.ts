@@ -1,4 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { PaymentMethod } from "./PaymentMethod.entity";
+import { User } from "./User.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { InvoiceDetail } from "./InvoiceDetail.entity";
 
 @Entity()
@@ -15,6 +25,13 @@ export class Invoice {
   @Column({ type: "nvarchar", nullable: false, length: 200 })
   status!: string;
 
-  @ManyToOne(() => InvoiceDetail, invoiceDetail => invoiceDetail.invoice)
-  invoiceDetails!: InvoiceDetail[]
+  @ManyToOne(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.invoice)
+  invoiceDetails!: InvoiceDetail[];
+
+  @ManyToOne(() => User, (user) => user.invoices)
+  user!: User;
+
+  @OneToOne(() => PaymentMethod)
+  @JoinColumn()
+  paymentMethod!: PaymentMethod;
 }

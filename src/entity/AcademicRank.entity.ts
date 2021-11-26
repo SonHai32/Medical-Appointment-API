@@ -1,4 +1,4 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Entity } from "typeorm";
 
 @Entity()

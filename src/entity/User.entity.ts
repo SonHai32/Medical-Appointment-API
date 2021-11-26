@@ -1,3 +1,4 @@
+import { Invoice } from './Invoice.entity';
 import { dateToSqlDatetimeFormat } from "../utils/format.utils";
 import {
   Entity,
@@ -57,4 +58,7 @@ export class User {
 
   @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.user)
   patientRecord!: PatientRecord[];
-}
+
+  @OneToMany(() => Invoice, invoice => invoice.user)
+  invoices!: Invoice[]
+} 
