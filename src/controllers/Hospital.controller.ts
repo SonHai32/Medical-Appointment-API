@@ -11,7 +11,9 @@ const hospitalDao = new HospitalDao();
 export const _getOne = async (req: Request, res: Response) => {
   try {
     const id: string = req.body.id || req.params.id || req.query.id;
-    const hospital: Hospital | undefined = await hospitalDao.getOne(id);
+    const relations: string = req.query.relations || req.body.relations || req.params.relations
+    const relationsStringToArray: string[] | undefined = relations.split(',')
+    const hospital: Hospital | undefined = await hospitalDao.getOne(id, relationsStringToArray);
     if (hospital) {
       res.status(OK).json({ data: hospital });
     } else {

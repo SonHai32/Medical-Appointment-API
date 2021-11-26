@@ -21,11 +21,19 @@ export class HospitalDao implements IHospitalDao {
     return getRepository(Hospital).delete(listID);
   }
 
-  getOne(id: string): Promise<Hospital | undefined> {
-    return getRepository(Hospital).findOne({ id });
+  /**
+   *
+   *
+   * @param {string} id
+   * @param {string[]} [relations] list relation you want to get with
+   * @return {*}  {(Promise<Hospital | undefined>)}
+   * @memberof HospitalDao
+   */
+  getOne(id: string, relations?: string[]): Promise<Hospital | undefined> {
+    return getRepository(Hospital).findOne({ id }, {relations: relations});
   }
 
   getAll(): Promise<Hospital[]> | undefined {
-    return getRepository(Hospital).find();
+    return getRepository(Hospital).find({relations: []});
   }
 }
