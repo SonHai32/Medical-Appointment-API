@@ -14,7 +14,15 @@ export class HospitalDao implements IHospitalDao {
   }
 
   update(hospital: Hospital): Promise<UpdateResult> | undefined {
-    return getRepository(Hospital).createQueryBuilder().where({id: hospital.id}).update( {name: hospital.name, ward: hospital.ward}).execute()
+    return getRepository(Hospital)
+      .createQueryBuilder()
+      .where({ id: hospital.id })
+      .update({
+        name: hospital.name,
+        ward: hospital.ward,
+        address: hospital.address,
+      })
+      .execute();
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {
@@ -30,10 +38,17 @@ export class HospitalDao implements IHospitalDao {
    * @memberof HospitalDao
    */
   getOne(id: string, relations?: string[]): Promise<Hospital | undefined> {
-    return getRepository(Hospital).findOne({ id }, {relations: relations});
+    return getRepository(Hospital).findOne({ id }, { relations: relations });
   }
 
   getAll(): Promise<Hospital[]> | undefined {
-    return getRepository(Hospital).find({relations: ['ward', 'ward.district', 'ward.district.province', 'ward.district.province.country']});
+    return getRepository(Hospital).find({
+      relations: [
+        "ward",
+        "ward.district",
+        "ward.district.province",
+        "ward.district.province.country",
+      ],
+    });
   }
 }
