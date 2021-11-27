@@ -14,7 +14,7 @@ export class HospitalDao implements IHospitalDao {
   }
 
   update(hospital: Hospital): Promise<UpdateResult> | undefined {
-    return getRepository(Hospital).createQueryBuilder().update(hospital).execute()
+    return getRepository(Hospital).createQueryBuilder().where({id: hospital.id}).update( {name: hospital.name, ward: hospital.ward}).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {
@@ -34,6 +34,6 @@ export class HospitalDao implements IHospitalDao {
   }
 
   getAll(): Promise<Hospital[]> | undefined {
-    return getRepository(Hospital).find({relations: []});
+    return getRepository(Hospital).find({relations: ['ward', 'ward.district', 'ward.district.province', 'ward.district.province.country']});
   }
 }
