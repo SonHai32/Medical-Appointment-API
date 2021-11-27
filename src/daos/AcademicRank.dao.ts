@@ -16,7 +16,7 @@ export class AcademicRankDao implements IAcademicRankDao {
   }
 
   update(academicRank: AcademicRank): Promise<UpdateResult> | undefined {
-    return getRepository(AcademicRank).update(academicRank.id, academicRank);
+    return getRepository(AcademicRank).createQueryBuilder().update(academicRank).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

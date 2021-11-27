@@ -68,7 +68,7 @@ export class UserDao implements IUserDao {
     try {
       return getRepository(User).find();
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
@@ -139,14 +139,11 @@ export class UserDao implements IUserDao {
     phoneNumber: string,
     userID: string
   ) => {
-    try {
-      return getRepository(User).update(
-        { id: userID },
-        { emailAddress, phoneNumber, fullname }
-      );
-    } catch (error) {
-      throw error;
-    }
+    return getRepository(User)
+      .createQueryBuilder()
+      .update({ id: userID })
+      .set({ emailAddress, phoneNumber, fullname })
+      .execute();
   };
 
   public async changePassword(
@@ -165,10 +162,11 @@ export class UserDao implements IUserDao {
           process.env.SALT_ROUNDS || 10
         );
         if (newHashPassword) {
-          return getRepository(User).update(
-            { username },
-            { password: newHashPassword }
-          );
+          return getRepository(User)
+            .createQueryBuilder()
+            .update({ username })
+            .set({ password: newHashPassword })
+            .execute();
         } else {
           throw new Error("Error while encrypting password");
         }

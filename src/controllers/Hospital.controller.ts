@@ -1,4 +1,4 @@
-import { DeleteResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { Hospital } from "./../entity/Hospital.entity";
 import { HospitalDao } from "./../daos/Hospital.dao";
 import statusCodes from "http-status-codes";
@@ -54,13 +54,15 @@ export const _add = async (req: Request, res: Response) => {
 export const _update = async (req: Request, res: Response) => {
   try {
     const hospital: Hospital = req.body.data;
-    const result = await hospitalDao.update(hospital);
+    const result: UpdateResult | undefined = await hospitalDao.update(hospital);
+    console.log('udate', result);
     if (result) {
       res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
     } else {
       throw new Error(ResponseMessage.UPDATE_FAIL);
     }
   } catch (error) {
+    console.log(error);
     res.status(BAD_REQUEST).json({ message: (error as Error).message });
   }
 };

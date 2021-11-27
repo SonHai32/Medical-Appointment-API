@@ -13,7 +13,7 @@ export interface IDoctorAccountDao {
   getAll: () => Promise<DoctorAccount[]> | undefined;
   getOne: (id: string) => Promise<DoctorAccount | undefined>;
   delete: (listID: string[]) => Promise<DeleteResult> | undefined;
-  update: (doctorAccount: DoctorAccount) => Promise<DoctorAccount> | undefined;
+  update: (doctorAccount: DoctorAccount) => Promise<UpdateResult> | undefined;
   disable: (listID: string[]) => Promise<UpdateResult> | undefined;
 }
 
@@ -83,7 +83,7 @@ export class DoctorAccountDao implements IDoctorAccountDao {
     return getRepository(DoctorAccount).update(listID, { active: false });
   }
 
-  update(doctorAccount: DoctorAccount): Promise<DoctorAccount> | undefined {
-    return getRepository(DoctorAccount).save(doctorAccount);
+  update(doctorAccount: DoctorAccount): Promise<UpdateResult> | undefined {
+    return getRepository(DoctorAccount).createQueryBuilder().update(doctorAccount).execute()
   }
 }

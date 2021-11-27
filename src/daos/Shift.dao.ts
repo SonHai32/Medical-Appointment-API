@@ -16,7 +16,7 @@ export class ShiftDao implements IShiftDao {
   }
 
   update(shift: Shift): Promise<UpdateResult> | undefined {
-    return getRepository(Shift).update({ id: shift.id }, shift);
+    return getRepository(Shift).createQueryBuilder().update(shift).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

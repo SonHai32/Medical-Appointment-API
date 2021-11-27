@@ -26,7 +26,7 @@ export class PatientRecordDao implements IPatientRecordDao {
   }
 
   update(patientRecord: PatientRecord): Promise<UpdateResult> | undefined {
-    return getRepository(PatientRecord).update(patientRecord.id, patientRecord);
+    return getRepository(PatientRecord).createQueryBuilder().update(patientRecord).execute()
   }
 
   detete(listID: string[]): Promise<DeleteResult> {

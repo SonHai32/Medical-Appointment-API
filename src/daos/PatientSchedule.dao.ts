@@ -20,10 +20,7 @@ export class PatientScheduleDao implements IPatientScheduleDao {
   }
 
   update(patientSchedule: PatientSchedule): Promise<UpdateResult> | undefined {
-    return getRepository(PatientSchedule).update(
-      { id: patientSchedule.id },
-      patientSchedule
-    );
+    return getRepository(PatientSchedule).createQueryBuilder().update(patientSchedule).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

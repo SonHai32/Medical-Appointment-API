@@ -17,10 +17,7 @@ export class PaymentMethodDao implements IPaymentMethodDao {
   }
 
   update(paymentMethod: PaymentMethod): Promise<UpdateResult> | undefined {
-    return getRepository(PaymentMethod).update(
-      { id: paymentMethod.id },
-      paymentMethod
-    );
+    return getRepository(PaymentMethod).createQueryBuilder().update(paymentMethod).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

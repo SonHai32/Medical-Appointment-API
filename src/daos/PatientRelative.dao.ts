@@ -23,10 +23,7 @@ export class PatientRetriveDao implements IPatientRelativeDao {
   public update(
     patientRelative: PatientRelative
   ): Promise<UpdateResult> | undefined {
-    return getRepository(PatientRelative).update(
-      patientRelative.id,
-      patientRelative
-    );
+    return getRepository(PatientRelative).createQueryBuilder().update(patientRelative).execute();
   }
 
   public delete(id: string): Promise<DeleteResult> | undefined {

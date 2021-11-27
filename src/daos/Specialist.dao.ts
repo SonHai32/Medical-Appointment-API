@@ -15,7 +15,7 @@ export class SpecialistDao implements ISpecialistDao {
   }
 
   update(specialist: Specialist): Promise<UpdateResult> | undefined {
-    return getRepository(Specialist).update(specialist.id, specialist);
+    return getRepository(Specialist).createQueryBuilder().update(specialist).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

@@ -15,7 +15,7 @@ export class DoctorDao implements IDoctorDao {
   }
 
   update(doctor: Doctor): Promise<UpdateResult> | undefined {
-    return getRepository(Doctor).update(doctor.id, doctor);
+    return getRepository(Doctor).createQueryBuilder().update(doctor).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

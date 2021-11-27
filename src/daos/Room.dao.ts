@@ -16,7 +16,7 @@ export class RoomDao implements IRoomDao {
   }
 
   update(room: Room): Promise<UpdateResult> | undefined {
-    return getRepository(Room).update({ id: room.id }, room);
+    return getRepository(Room).createQueryBuilder().update(room).execute()
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {
