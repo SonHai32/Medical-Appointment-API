@@ -70,6 +70,9 @@ export const _update = async (req: Request, res: Response) => {
 export const _delete = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.data;
+    if(!listID){
+      throw new Error('Missing listID')
+    }
     const result: DeleteResult | undefined = await hospitalDao.delete(listID);
     if (result) {
       res.status(OK).json({ message: ResponseMessage.DELETE_SUCCESS });

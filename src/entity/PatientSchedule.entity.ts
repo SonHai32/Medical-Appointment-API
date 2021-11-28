@@ -46,8 +46,9 @@ export class PatientSchedule {
     () => InvoiceDetail,
     (invoiceDetail) => invoiceDetail.patientSchedule
   )
-  invoiceDetail!: InvoiceDetail;
+  invoiceDetails!: InvoiceDetail[];
 
   @OneToOne(() => Service)
+  @JoinColumn()
   service!: Service;
 }

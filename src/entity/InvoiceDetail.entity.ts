@@ -1,5 +1,9 @@
 import { PatientSchedule } from "./PatientSchedule.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+} from "typeorm";
 import { Invoice } from "./Invoice.entity";
 @Entity()
 export class InvoiceDetail {
@@ -8,7 +12,11 @@ export class InvoiceDetail {
   })
   invoice!: Invoice;
 
-  @OneToOne(() => PatientSchedule, { primary: true })
+  @ManyToOne(
+    () => PatientSchedule,
+    (patientSchedule) => patientSchedule.invoiceDetails,
+    { primary: true }
+  )
   patientSchedule!: PatientSchedule;
 
   @Column({ type: "float", default: 0, nullable: false })
