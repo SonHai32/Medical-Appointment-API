@@ -33,9 +33,6 @@ export class Doctor {
   @Column({ type: "datetime", nullable: false })
   birthday!: Date;
 
-  @Column({ type: "int", width: 100, nullable: false })
-  age!: number;
-
   @Column({
     type: "varchar",
     length: 10,
@@ -61,16 +58,13 @@ export class Doctor {
   @Column({ type: "datetime", nullable: false })
   startAt!: Date;
 
-  @OneToOne(() => Specialist)
-  @JoinColumn()
+  @ManyToOne(() => Specialist, specialist => specialist.doctors)
   specialist!: Specialist;
 
-  @OneToOne(() => Ward)
-  @JoinColumn()
+  @ManyToOne(() => Ward, ward => ward.doctors)
   ward!: Ward;
 
-  @OneToOne(() => Gender)
-  @JoinColumn()
+  @ManyToOne(() => Gender, gender => gender.doctors)
   gender!: Gender;
 
   @ManyToOne(() => Hospital, (hospital) => hospital.doctors)

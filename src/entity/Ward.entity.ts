@@ -1,3 +1,4 @@
+import { Doctor } from './Doctor.entity';
 import { PatientRecord } from "./PatientRecord.entity";
 import { Hospital } from "./Hospital.entity";
 import { Entity, PrimaryColumn, Column, OneToMany, ManyToOne } from "typeorm";
@@ -19,4 +20,7 @@ export class Ward {
 
   @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.ward)
   patientRecord!: PatientRecord[];
+
+  @OneToMany(() => Doctor, doctor => doctor.ward)
+  doctors!: Doctor[]
 }

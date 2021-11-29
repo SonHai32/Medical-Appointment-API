@@ -1,5 +1,6 @@
+import { Doctor } from './Doctor.entity';
 import { Hospital } from "./Hospital.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Specialist {
@@ -11,4 +12,7 @@ export class Specialist {
 
   @Column({ type: "nvarchar", length: 200, nullable: true })
   description!: string;
+
+  @OneToMany(() => Doctor, doctor => doctor.specialist)
+  doctors!: Doctor[]
 }
