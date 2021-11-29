@@ -1,4 +1,4 @@
-import { DeleteResult, UpdateResult } from "typeorm";
+import { DeleteResult, TypeORMError, UpdateResult } from "typeorm";
 import { Request, Response } from "express";
 import { AcademicRankDao } from "../daos/AcademicRank.dao";
 import { AcademicRank } from "../entity/AcademicRank.entity";
@@ -7,6 +7,26 @@ import { ResponseMessage } from "../types/ResponseMessage.type";
 
 const academicRankDao = new AcademicRankDao();
 const { BAD_REQUEST, OK } = httpStatusCodes;
+
+export const _add = async (req: Request, res: Response) => {
+  try {
+    const newAcademicRank: AcademicRank | undefined = req.body.data;
+    if (!newAcademicRank) {
+      throw new Error("No academic rank send to server");
+    }
+
+    const resutl: AcademicRank | undefined = await academicRankDao.add(
+      newAcademicRank
+    );
+    if (resutl) {
+      res.status(OK).json({ message: ResponseMessage.INSERT_SUCCESS });
+    } else {
+      throw new Error(ResponseMessage.INSERT_FAIL);
+    }
+  } catch (error) {
+    res.status(BAD_REQUEST).send((error as any).sqlMessage);
+  }
+};
 
 export const _getOne = async (req: Request, res: Response) => {
   try {
