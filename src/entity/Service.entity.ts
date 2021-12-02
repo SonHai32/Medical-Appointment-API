@@ -1,12 +1,12 @@
 import { Specialist } from "./Specialist.entity";
-import { Column, JoinColumn, OneToOne } from "typeorm";
+import { Column, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Hospital } from "./Hospital.entity";
 import { ManyToOne } from "typeorm";
-import { Entity, PrimaryColumn } from "typeorm";
+import { Entity,  } from "typeorm";
 
 @Entity()
 export class Service {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @ManyToOne(() => Hospital, hospital => hospital.services)

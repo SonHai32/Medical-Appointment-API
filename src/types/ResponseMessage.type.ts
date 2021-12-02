@@ -7,5 +7,6 @@ export enum ResponseMessage {
   DELETE_SUCCESS = "Document delete success",
   DELETE_FAIL = "Document delete fail",
   LOGIN_SUCCESS = "Login success",
-  LOGIN_FAIL = "Login fail"
+  LOGIN_FAIL = "Login fail",
+  MISSING_REQUESR_DATA = "Missing request data",
 }
