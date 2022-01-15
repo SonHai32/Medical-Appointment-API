@@ -9,11 +9,10 @@ const provinceDao = new ProvinceDao();
 
 export const _getAll = async (req: Request, res: Response) => {
   try {
-    const countryId: string | undefined = req.query.countryId as string;
-    console.log(countryId);
-    const result: Province[] | undefined = await provinceDao.getAll(countryId);
+    // const countryId: string | undefined = req.query.countryId as string;
+    const result: Province[] | undefined = await provinceDao.getAll("QG01");
     if (result) {
-      res.status(OK).json({ data: result });
+      res.status(OK).json(result);
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }

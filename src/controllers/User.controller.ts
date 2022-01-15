@@ -22,19 +22,14 @@ export const _register = async (req: Request, res: Response) => {
   }
 };
 
-export const _updateUserDetail = async (
+export const _update = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { fullname, phoneNumber, emailAddress, id } = req.body;
-    const result: UpdateResult = await userDao.updateDetail(
-      fullname,
-      emailAddress,
-      phoneNumber,
-      id
-    );
-    if (result.affected) {
+    const user: User = req.body;
+    const result: User | undefined = await userDao.update(user);
+    if (result) {
       res.status(OK).json({ status: "SUCCESS", message: "success" });
     } else {
       throw new Error("Update fail");
@@ -58,12 +53,16 @@ export const _updateUserPassword = async (
       newPassword
     );
     if (result) {
-      res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
+      res
+        .status(OK)
+        .json({ message: ResponseMessage.UPDATE_SUCCESS, status: "SUCCESS" });
     } else {
       throw new Error(ResponseMessage.UPDATE_FAIL);
     }
   } catch (error) {
-    throw error;
+    res
+      .status(BAD_REQUEST)
+      .json({ message: (error as Error).message, status: "FAIL" });
   }
 };
 

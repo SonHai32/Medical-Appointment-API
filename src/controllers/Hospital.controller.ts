@@ -11,9 +11,13 @@ const hospitalDao = new HospitalDao();
 export const _getOne = async (req: Request, res: Response) => {
   try {
     const id: string = req.body.id || req.params.id || req.query.id;
-    const relations: string = req.query.relations || req.body.relations || req.params.relations
-    const relationsStringToArray: string[] | undefined = relations.split(',')
-    const hospital: Hospital | undefined = await hospitalDao.getOne(id, relationsStringToArray);
+    const relations: string =
+      req.query.relations || req.body.relations || req.params.relations;
+    const relationsStringToArray: string[] | undefined = relations.split(",");
+    const hospital: Hospital | undefined = await hospitalDao.getOne(
+      id,
+      relationsStringToArray
+    );
     if (hospital) {
       res.status(OK).json({ data: hospital });
     } else {
@@ -28,7 +32,7 @@ export const _getAll = async (req: Request, res: Response) => {
   try {
     const hospital: Hospital[] | undefined = await hospitalDao.getAll();
     if (hospital) {
-      res.status(OK).json({ data: hospital });
+      res.status(OK).json(hospital);
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }
@@ -55,7 +59,7 @@ export const _update = async (req: Request, res: Response) => {
   try {
     const hospital: Hospital = req.body.data;
     const result: UpdateResult | undefined = await hospitalDao.update(hospital);
-    console.log('udate', result);
+    console.log("udate", result);
     if (result) {
       res.status(OK).json({ message: ResponseMessage.UPDATE_SUCCESS });
     } else {
@@ -70,8 +74,8 @@ export const _update = async (req: Request, res: Response) => {
 export const _delete = async (req: Request, res: Response) => {
   try {
     const listID: string[] = req.body.data;
-    if(!listID){
-      throw new Error('Missing listID')
+    if (!listID) {
+      throw new Error("Missing listID");
     }
     const result: DeleteResult | undefined = await hospitalDao.delete(listID);
     if (result) {

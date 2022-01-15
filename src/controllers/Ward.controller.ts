@@ -12,7 +12,7 @@ export const _getAll = async (req: Request, res: Response) => {
     const districtId: string | undefined = req.query.districtId as string;
     const result: Ward[] | undefined = await wardDao.getAll(districtId);
     if (result) {
-      res.status(OK).json({ data: result });
+      res.status(OK).json(result);
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }

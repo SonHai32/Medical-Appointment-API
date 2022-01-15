@@ -11,7 +11,7 @@ export const _getALl = async (req: Request, res: Response) => {
   try {
     const genders: Gender[] | undefined = await genderDao.getAll();
     if (genders) {
-      res.status(OK).json({ data: genders });
+      res.status(OK).json(genders);
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }

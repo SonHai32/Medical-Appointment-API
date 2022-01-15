@@ -10,10 +10,11 @@ const patientRecordDao = new PatientRecordDao();
 
 export const _add = async (req: Request, res: Response) => {
   try {
-    const patientRecord: PatientRecord = req.body.patientRecord;
+    const patientRecord: PatientRecord = req.body;
 
     const saved = await patientRecordDao.add(patientRecord);
     if (saved) {
+      console.log(saved);
       res.status(OK).json({
         message: `New PatientRecord was added by ${saved.user.username}`,
       });
@@ -21,6 +22,7 @@ export const _add = async (req: Request, res: Response) => {
       throw new Error("PatientRecord was not add");
     }
   } catch (error) {
+    console.log(error);
     res.status(BAD_REQUEST).json({ message: (error as Error).message });
   }
 };
@@ -63,7 +65,7 @@ export const _getAll = async (req: Request, res: Response) => {
   try {
     const result: PatientRecord[] | undefined = await patientRecordDao.getAll();
     if (result) {
-      res.status(OK).json({ data: result });
+      res.status(OK).json(result);
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }

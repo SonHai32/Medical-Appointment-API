@@ -50,7 +50,7 @@ export class PatientRecord {
   citizenIdentification!: string;
 
   @Column({
-    type: "date",
+    type: "datetime",
     nullable: false,
   })
   birthday!: Date;
@@ -58,17 +58,16 @@ export class PatientRecord {
   @Column({ type: "int", width: 3 })
   age!: number;
 
-  @Column({ type: "nvarchar", length: 32, nullable: false })
+  @Column({ type: "nvarchar", length: 32, nullable: true })
   job!: string;
 
-  @Column({ type: "nvarchar", length: 200 })
+  @Column({ type: "nvarchar", length: 200,nullable: false })
   address!: string;
 
   @ManyToOne(() => User, (user) => user.patientRecord)
   user!: User;
 
-  @OneToOne(() => Gender)
-  @JoinColumn()
+  @ManyToOne(() => Gender)
   gender!: Gender;
 
   @OneToOne(() => Ward)

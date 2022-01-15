@@ -1,4 +1,4 @@
-PATCH  http://localhost:3000/api/user/password
+PATCH  http://localhost:3030/api/user/password
 Content-Type: application/json
 
 {
@@ -49,3 +49,18 @@ Content-Type: application/json
 
 ###
 GET  http://localhost:3030/api/country
+###
+#####
+POST  http://localhost:3030/api/auth/register
+Content-Type: 'application/json'
+{
+"data": {
+    "fullname": "asdasdsad",
+    "phoneNumber": "dsadsadsad",
+    "emailAddress": "dsadsadsad",
+    "username": "sdsdasdasda",
+    "createdAt": "2021-11-16T07:06:40.000Z",
+    "active": true,
+  }
+
+}

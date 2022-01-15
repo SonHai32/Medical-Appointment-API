@@ -1,4 +1,4 @@
-import { Invoice } from './Invoice.entity';
+import { Invoice } from "./Invoice.entity";
 import { dateToSqlDatetimeFormat } from "../utils/format.utils";
 import {
   Entity,
@@ -44,7 +44,7 @@ export class User {
   username: string = "";
 
   @Column({ type: "varchar", length: 64, nullable: false })
-  password: string = "";
+  password!: string;
 
   @Column({
     type: "datetime",
@@ -53,12 +53,19 @@ export class User {
   })
   createdAt: Date = new Date();
 
+  @Column({
+    type: "nvarchar",
+    nullable: true,
+    length: 300,
+  })
+  address!: string;
+
   @Column({ type: "boolean", default: true, nullable: false })
   active: boolean = true;
 
   @OneToMany(() => PatientRecord, (patientRecord) => patientRecord.user)
   patientRecord!: PatientRecord[];
 
-  @OneToMany(() => Invoice, invoice => invoice.user)
-  invoices!: Invoice[]
-} 
+  @OneToMany(() => Invoice, (invoice) => invoice.user)
+  invoices!: Invoice[];
+}

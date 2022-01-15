@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import statusCode from "http-status-codes";
 import { ShiftDao } from "../daos/Shift.dao";
 import { ResponseMessage } from "../types/ResponseMessage.type";
-import { json } from "stream/consumers";
 
 const { BAD_REQUEST, OK } = statusCode;
 const shiftDao = new ShiftDao();

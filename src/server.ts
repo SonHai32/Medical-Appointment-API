@@ -14,9 +14,9 @@ const { BAD_REQUEST } = statusCodes;
  *                              Set basic express settings
  ***********************************************************************************/
 
-app.use(express.json()), app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(cookieProps.secret));
-app.use(cors())
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }

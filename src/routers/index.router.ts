@@ -19,12 +19,13 @@ import SpecialistRouter from "./Specialist.router";
 import UserRouter from "./User.router";
 import WardRouter from "./Ward.router";
 import ServiceRouter from "./Service.router";
+import UserAuthRouter from "./UserAuth.router";
 
 const router = Router();
 router.use("/academic-rank", AcademicRankRouter);
 router.use("/country", CountryRouter);
 router.use("/district", DistrictRouter);
-router.use("/doctor", DoctorRouter);
+router.use("/doctors", DoctorRouter);
 router.use("/doctor-account", DoctorAccountRouter);
 router.use("/gender", GenderRouter);
 router.use("/hospital", HospitalRouter);
@@ -41,4 +42,6 @@ router.use("/specialist", SpecialistRouter);
 router.use("/ward", WardRouter);
 router.use("/user", UserRouter);
 router.use("/service", ServiceRouter);
+router.use("/auth", UserAuthRouter);
+
 export default router;

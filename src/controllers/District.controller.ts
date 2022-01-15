@@ -13,7 +13,7 @@ export const _getAll = async (req: Request, res: Response) => {
       provinceId
     );
     if (districts) {
-      res.status(OK).json({ data: districts });
+      res.status(OK).json(districts);
     }
   } catch (error) {
     res.status(BAD_REQUEST).json({ message: (error as Error).message });

@@ -6,14 +6,10 @@ export interface IUserDao {
   register: (user: User) => Promise<User | undefined>;
   getAll: () => Promise<User[]> | undefined;
   getOne: (userID: string) => Promise<User | undefined>;
+  getBy: (param: {}) => Promise<User | undefined>;
   delete: (listID: string[]) => Promise<DeleteResult> | undefined;
-  login: (username: string, password: string) => Promise<User>;
-  updateDetail: (
-    fullname: string,
-    emailAddress: string,
-    phoneNumber: string,
-    userID: string
-  ) => Promise<UpdateResult> | undefined;
+  login: (username: string, password: string) => Promise<User | undefined>;
+  update: (user: User) => Promise<User | undefined>;
   changePassword: (
     username: string,
     oldPassword: string,
@@ -49,10 +45,7 @@ export class UserDao implements IUserDao {
 
   public async register(user: User): Promise<User | undefined> {
     try {
-      const hashPassword = await bcrypt.hash(
-        user.password,
-        process.env.SALT_ROUNDS || 10
-      );
+      const hashPassword = await bcrypt.hash(user.password, 10);
       if (hashPassword) {
         user.password = hashPassword;
         return getRepository(User).save(user);
@@ -67,6 +60,14 @@ export class UserDao implements IUserDao {
   public getAll(): Promise<User[]> | undefined {
     try {
       return getRepository(User).find();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public getBy(param: {}): Promise<User | undefined> {
+    try {
+      return getRepository(User).findOne({ ...param });
     } catch (error) {
       throw error;
     }
@@ -101,7 +102,10 @@ export class UserDao implements IUserDao {
     }
   }
 
-  public async login(username: string, password: string): Promise<User> {
+  public async login(
+    username: string,
+    password: string
+  ): Promise<User | undefined> {
     try {
       const user: User | undefined = await getRepository(User).findOne(
         {
@@ -133,17 +137,9 @@ export class UserDao implements IUserDao {
     }
   }
 
-  public updateDetail = (
-    fullname: string,
-    emailAddress: string,
-    phoneNumber: string,
-    userID: string
-  ) => {
-    return getRepository(User)
-      .createQueryBuilder()
-      .update({ id: userID })
-      .set({ emailAddress, phoneNumber, fullname })
-      .execute();
+  public update = async (user: User): Promise<User | undefined> => {
+    const currentUser = await getRepository(User).findOne({ id: user.id });
+    return getRepository(User).save({ ...currentUser, ...user });
   };
 
   public async changePassword(
