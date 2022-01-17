@@ -61,7 +61,7 @@ export class PatientRecord {
   @Column({ type: "nvarchar", length: 32, nullable: true })
   job!: string;
 
-  @Column({ type: "nvarchar", length: 200,nullable: false })
+  @Column({ type: "nvarchar", length: 200, nullable: false })
   address!: string;
 
   @ManyToOne(() => User, (user) => user.patientRecord)
@@ -70,7 +70,7 @@ export class PatientRecord {
   @ManyToOne(() => Gender)
   gender!: Gender;
 
-  @OneToOne(() => Ward)
+  @ManyToOne(() => Ward, (ward) => ward.patientRecord)
   ward!: Ward;
 
   @OneToMany(
@@ -79,8 +79,10 @@ export class PatientRecord {
   )
   patientSchedule!: PatientSchedule[];
 
-  @OneToOne(() => PatientRelative, patientRelative => patientRelative.patientRecord)
+  @OneToOne(
+    () => PatientRelative,
+    (patientRelative) => patientRelative.patientRecord
+  )
   @JoinColumn()
   patientRelative!: PatientRelative;
-
 }

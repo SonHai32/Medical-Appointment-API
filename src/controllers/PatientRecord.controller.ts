@@ -70,6 +70,7 @@ export const _getAll = async (req: Request, res: Response) => {
       throw new Error(ResponseMessage.GET_FAIL);
     }
   } catch (error) {
+    console.log(error);
     res.status(BAD_REQUEST).json({ message: (error as Error).message });
   }
 };

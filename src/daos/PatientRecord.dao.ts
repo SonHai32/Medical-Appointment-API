@@ -18,7 +18,9 @@ export class PatientRecordDao implements IPatientRecordDao {
   }
 
   getAll(): Promise<PatientRecord[]> | undefined {
-    return getRepository(PatientRecord).find();
+    return getRepository(PatientRecord).find({
+      relations: ["gender", "ward", "ward.district", "ward.district.province"],
+    });
   }
 
   getOne(id: string): Promise<PatientRecord | undefined> {
@@ -26,7 +28,10 @@ export class PatientRecordDao implements IPatientRecordDao {
   }
 
   update(patientRecord: PatientRecord): Promise<UpdateResult> | undefined {
-    return getRepository(PatientRecord).createQueryBuilder().update(patientRecord).execute()
+    return getRepository(PatientRecord)
+      .createQueryBuilder()
+      .update(patientRecord)
+      .execute();
   }
 
   detete(listID: string[]): Promise<DeleteResult> {
