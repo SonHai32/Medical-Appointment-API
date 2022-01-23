@@ -19,3 +19,20 @@ export const _getAll = async (req: Request, res: Response) => {
     res.status(BAD_REQUEST).json({ message: (error as Error).message });
   }
 };
+
+export const _getAllByCountry = async (req: Request, res: Response) => {
+  try {
+    const countryId =
+      req.body.countryId || req.query.countryId || req.params.countryId;
+    const country: Country[] | undefined = await countryDao.getAllByCountry(
+      countryId
+    );
+    if (country) {
+      res.status(OK).json({ data: country });
+    } else {
+      throw new Error(ResponseMessage.GET_FAIL);
+    }
+  } catch (error) {
+    res.status(BAD_REQUEST).json({ message: (error as Error).message });
+  }
+};

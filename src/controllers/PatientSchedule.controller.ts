@@ -35,17 +35,18 @@ export const _getAll = async (req: Request, res: Response) => {
 
 export const _add = async (req: Request, res: Response) => {
   try {
-    const newPatientSchedule = req.body.data;
-    const result: PatientSchedule | undefined = await patientScheduleDao.add(
+    const newPatientSchedule: PatientSchedule[] = req.body;
+    const result: PatientSchedule[] | undefined = await patientScheduleDao.add(
       newPatientSchedule
     );
-    if (result) {
-      res.status(OK).json({ message: ResponseMessage.INSERT_SUCCESS });
+    if (result && result.length > 0) {
+      console.log(result);
+      res.status(OK).json({ message: "Đăng ký lịch khám thành công" });
     } else {
-      throw new Error(ResponseMessage.INSERT_FAIL);
+      throw new Error("Đăng ký lịch thất bại");
     }
   } catch (error) {
-    res.status(BAD_REQUEST).json({ message: (error as Error).message });
+    res.status(BAD_REQUEST).send((error as Error).message);
   }
 };
 

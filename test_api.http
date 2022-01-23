@@ -53,6 +53,7 @@ GET  http://localhost:3030/api/country
 #####
 POST  http://localhost:3030/api/auth/register
 Content-Type: 'application/json'
+
 {
 "data": {
     "fullname": "asdasdsad",
@@ -62,5 +63,15 @@ Content-Type: 'application/json'
     "createdAt": "2021-11-16T07:06:40.000Z",
     "active": true,
   }
+}
+
+
+###
+
+GET  http://localhost:3030/api/service/getByHospital
+Content-Type: application/json
+
+{
+  "id": "4cc7f5d3-e2c7-4159-8f9c-c7d99e3785a4"
 
 }

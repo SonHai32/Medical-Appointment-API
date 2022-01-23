@@ -9,8 +9,8 @@ const provinceDao = new ProvinceDao();
 
 export const _getAll = async (req: Request, res: Response) => {
   try {
-    // const countryId: string | undefined = req.query.countryId as string;
-    const result: Province[] | undefined = await provinceDao.getAll("QG01");
+    const countryId: string | undefined = req.query.countryId as string;
+    const result: Province[] | undefined = await provinceDao.getAll(countryId);
     if (result) {
       res.status(OK).json(result);
     } else {

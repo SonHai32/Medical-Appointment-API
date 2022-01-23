@@ -6,6 +6,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -25,7 +26,7 @@ export class Invoice {
   @Column({ type: "nvarchar", nullable: false, length: 200 })
   status!: string;
 
-  @ManyToOne(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.invoice)
+  @OneToMany(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.invoice)
   invoiceDetails!: InvoiceDetail[];
 
   @ManyToOne(() => User, (user) => user.invoices)

@@ -44,7 +44,7 @@ export class PatientRecord {
   @Column({
     type: "varchar",
     length: 12,
-    nullable: false,
+    nullable: true,
     unique: true,
   })
   citizenIdentification!: string;

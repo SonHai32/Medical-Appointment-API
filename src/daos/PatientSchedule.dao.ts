@@ -3,9 +3,7 @@ import { getRepository } from "typeorm";
 import { DeleteResult } from "typeorm";
 import { PatientSchedule } from "./../entity/PatientSchedule.entity";
 export interface IPatientScheduleDao {
-  add: (
-    patientSchedule: PatientSchedule
-  ) => Promise<PatientSchedule> | undefined;
+  add: (patientSchedule: PatientSchedule[]) => Promise<PatientSchedule[]>;
   update: (
     patientSchedule: PatientSchedule
   ) => Promise<UpdateResult> | undefined;
@@ -13,14 +11,19 @@ export interface IPatientScheduleDao {
   getOne: (id: string) => Promise<PatientSchedule | undefined>;
   getAll: () => Promise<PatientSchedule[]> | undefined;
 }
-
 export class PatientScheduleDao implements IPatientScheduleDao {
-  add(patientSchedule: PatientSchedule): Promise<PatientSchedule> {
-    return getRepository(PatientSchedule).save(patientSchedule);
+  add(patientSchedule: PatientSchedule[]): Promise<PatientSchedule[]> {
+    let addManyAsync = patientSchedule.map(async (val) =>
+      getRepository(PatientSchedule).save(val)
+    );
+    return Promise.all(addManyAsync);
   }
 
   update(patientSchedule: PatientSchedule): Promise<UpdateResult> | undefined {
-    return getRepository(PatientSchedule).createQueryBuilder().update(patientSchedule).execute()
+    return getRepository(PatientSchedule)
+      .createQueryBuilder()
+      .update(patientSchedule)
+      .execute();
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {

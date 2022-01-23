@@ -1,4 +1,4 @@
-import { UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { Request, Response } from "express";
 import { PatientRecordDao } from "../daos/PatientRecord.dao";
 import statusCodes from "http-status-codes";
@@ -14,16 +14,18 @@ export const _add = async (req: Request, res: Response) => {
 
     const saved = await patientRecordDao.add(patientRecord);
     if (saved) {
-      console.log(saved);
       res.status(OK).json({
-        message: `New PatientRecord was added by ${saved.user.username}`,
+        status: "SUCCESS",
+        message: "Thêm hồ sơ bệnh nhân thành công",
       });
     } else {
-      throw new Error("PatientRecord was not add");
+      throw new Error(
+        "Thêm hồ sơ bệnh nhân thất bại. Server quá tải hoặc đang có lỗi, vui lòng thử lại sau"
+      );
     }
   } catch (error) {
-    console.log(error);
-    res.status(BAD_REQUEST).json({ message: (error as Error).message });
+    const errorMessage = (error as Error).message;
+    res.status(BAD_REQUEST).send(errorMessage);
   }
 };
 
@@ -72,5 +74,24 @@ export const _getAll = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(BAD_REQUEST).json({ message: (error as Error).message });
+  }
+};
+
+export const _deleteOne = async (req: Request, res: Response) => {
+  try {
+    const id = req.body.id || req.query.id || req.params.id;
+    if (id) {
+      const result: DeleteResult | undefined = await patientRecordDao.deleteOne(
+        id
+      );
+      if (result) {
+        console.log(result.raw);
+        res.status(OK).json({ status: "SUCCESS", message: "Xoá thành công" });
+      } else {
+        throw new Error("Xoá thất bại, có lỗi xảy ra");
+      }
+    }
+  } catch (error) {
+    res.status(BAD_REQUEST).send((error as Error).message);
   }
 };

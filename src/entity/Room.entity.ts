@@ -10,7 +10,7 @@ import { Shift } from "./Shift.entitty";
 
 @Entity()
 export class Room {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn("increment")
   id!: string;
 
   @Column({ type: "nvarchar", length: 64 })

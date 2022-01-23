@@ -11,16 +11,16 @@ import {
 
 @Entity()
 export class Shift {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn("increment")
   id!: string;
 
   @Column({ type: "nvarchar", length: 64, nullable: false })
   name!: string;
 
-  @Column({ type: "int", nullable: false, name: "start_at" })
+  @Column({ type: "datetime", nullable: false, name: "start_at" })
   startAt!: number;
 
-  @Column({ name: "end_at", type: "int", nullable: false })
+  @Column({ name: "end_at", type: "datetime", nullable: false })
   endAt!: number;
 
   @Column({ type: "datetime", nullable: false })

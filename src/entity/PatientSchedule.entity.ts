@@ -2,7 +2,13 @@ import { Service } from "./Service.entity";
 import { InvoiceDetail } from "./InvoiceDetail.entity";
 import { dateToSqlDatetimeFormat } from "../utils/format.utils";
 import { Doctor } from "./Doctor.entity";
-import { Column, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Entity } from "typeorm";
 import { PatientRecord } from "./PatientRecord.entity";
 
@@ -21,8 +27,8 @@ export class PatientSchedule {
   @Column({ type: "datetime", nullable: false })
   dateBooking!: Date;
 
-  @Column({ type: "int", nullable: false })
-  time!: number;
+  @Column({ type: "varchar", nullable: false, length: 20 })
+  time!: string;
 
   @Column({ type: "nvarchar", length: 300, nullable: true })
   note!: string | null;
@@ -42,13 +48,9 @@ export class PatientSchedule {
   @ManyToOne(() => Doctor, (doctor) => doctor.patientSchedules)
   doctor!: Doctor;
 
-  @ManyToOne(
-    () => InvoiceDetail,
-    (invoiceDetail) => invoiceDetail.patientSchedule
-  )
-  invoiceDetails!: InvoiceDetail[];
+  @OneToOne(() => InvoiceDetail)
+  invoiceDetails!: InvoiceDetail;
 
-  @OneToOne(() => Service)
-  @JoinColumn()
+  @ManyToOne(() => Service, (service) => service.patientSchedules)
   service!: Service;
 }

@@ -37,7 +37,7 @@ export const _getOne = async (req: Request, res: Response) => {
 
 export const _add = async (req: Request, res: Response) => {
   try {
-    const newRoom: Room = req.body.data;
+    const newRoom: Room = req.body;
     const result: Room | undefined = await roomDao.add(newRoom);
     if (result) {
       res.status(OK).json({ message: ResponseMessage.INSERT_SUCCESS });

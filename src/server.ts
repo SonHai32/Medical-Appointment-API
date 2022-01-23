@@ -17,6 +17,7 @@ const { BAD_REQUEST } = statusCodes;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
+// app.use(cors({ credentials: true, origin: "http://localhost:16000" }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }

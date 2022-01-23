@@ -9,7 +9,9 @@ const invoiceDao = new InvoiceDao();
 
 export const _add = async (req: Request, res: Response) => {
   try {
+
     const newInvoice: Invoice = req.body.data;
+    
     const result: Invoice | undefined = await invoiceDao.add(newInvoice);
     if (result) {
       res.status(OK).json({ message: ResponseMessage.INSERT_SUCCESS });

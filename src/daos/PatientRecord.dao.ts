@@ -13,8 +13,16 @@ export interface IPatientRecordDao {
 }
 
 export class PatientRecordDao implements IPatientRecordDao {
-  add(patientRecord: PatientRecord): Promise<PatientRecord | undefined> {
-    return getRepository(PatientRecord).save(patientRecord);
+  async add(patientRecord: PatientRecord): Promise<PatientRecord | undefined> {
+    const existedCitizenIdentification = await getRepository(
+      PatientRecord
+    ).findOne({
+      where: { citizenIdentification: patientRecord.citizenIdentification },
+    });
+    if (!existedCitizenIdentification) {
+      return getRepository(PatientRecord).save(patientRecord);
+    }
+    throw new Error("CMND/CCCD Đã tồn tại");
   }
 
   getAll(): Promise<PatientRecord[]> | undefined {
@@ -36,5 +44,9 @@ export class PatientRecordDao implements IPatientRecordDao {
 
   detete(listID: string[]): Promise<DeleteResult> {
     return getRepository(PatientRecord).delete(listID);
+  }
+
+  deleteOne(id: string): Promise<DeleteResult> {
+    return getRepository(PatientRecord).delete({ id });
   }
 }

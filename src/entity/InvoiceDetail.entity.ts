@@ -2,21 +2,22 @@ import { PatientSchedule } from "./PatientSchedule.entity";
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Invoice } from "./Invoice.entity";
 @Entity()
 export class InvoiceDetail {
-  @ManyToOne(() => Invoice, (invoice) => invoice.invoiceDetails, {
-    primary: true,
-  })
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
+
+  @ManyToOne(() => Invoice, (invoice) => invoice.invoiceDetails)
   invoice!: Invoice;
 
-  @ManyToOne(
-    () => PatientSchedule,
-    (patientSchedule) => patientSchedule.invoiceDetails,
-    { primary: true }
-  )
+  @OneToOne(() => PatientSchedule)
+  @JoinColumn()
   patientSchedule!: PatientSchedule;
 
   @Column({ type: "float", default: 0, nullable: false })

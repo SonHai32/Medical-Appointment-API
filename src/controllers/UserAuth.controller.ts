@@ -36,7 +36,7 @@ export const _login = async (req: Request, res: Response) => {
 
 export const _register = async (req: Request, res: Response) => {
   try {
-    const user: User = req.body.data;
+    const user: User = req.body;
     if (user) {
       const saveResult = await userDao.register(user);
       if (saveResult) {
@@ -78,6 +78,7 @@ export const _getUserWithToken = async (req: Request, res: Response) => {
 export const _refreshToken = (req: Request, res: Response) => {
   try {
     const {refreshToken} = req.cookies;
+    console.log(req.cookies);
     const JWT_SECRET = process.env.JWT_SECRET;
 
     if (refreshToken && JWT_SECRET) {
@@ -85,6 +86,7 @@ export const _refreshToken = (req: Request, res: Response) => {
         if (error) {
           res.status(UNAUTHORIZED).json({ message: error });
         } else {
+          console.log(data);
           const user = await userDao.getOne(data.id);
           if (user) {
             const accessToken = getUserToken(user, "ACCESS_TOKEN");
@@ -98,6 +100,7 @@ export const _refreshToken = (req: Request, res: Response) => {
       throw new Error('not found token')
     }
   } catch (error) {
+    // console.log(error);
     res.status(UNAUTHORIZED).json({ message: error });
   }
 };
