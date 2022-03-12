@@ -1,7 +1,7 @@
 import { DeleteResult, getRepository, UpdateResult } from "typeorm";
 import { Hospital } from "./../entity/Hospital.entity";
 export interface IHospitalDao {
-  add: (hospital: Hospital) => Promise<Hospital> | undefined;
+  add: (hospital: Hospital) => Promise<Hospital | undefined>;
   update: (hospital: Hospital) => Promise<UpdateResult> | undefined;
   delete: (listID: string[]) => Promise<DeleteResult> | undefined;
   getOne: (id: string) => Promise<Hospital | undefined>;
@@ -9,7 +9,13 @@ export interface IHospitalDao {
 }
 
 export class HospitalDao implements IHospitalDao {
-  add(hospital: Hospital): Promise<Hospital> | undefined {
+  async add(hospital: Hospital): Promise<Hospital | undefined> {
+    const existedName = await getRepository(Hospital).findOne({
+      where: { name: hospital.name },
+    });
+    if (existedName) {
+      throw new Error("Tên bệnh viện đã trùng");
+    }
     return getRepository(Hospital).save(hospital);
   }
 

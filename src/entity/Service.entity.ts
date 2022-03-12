@@ -27,7 +27,9 @@ export class Service {
   })
   hospital!: Hospital;
 
-  @ManyToOne(() => Specialist, (specialist) => specialist.services, {createForeignKeyConstraints: true})
+  @ManyToOne(() => Specialist, (specialist) => specialist.services, {
+    createForeignKeyConstraints: true,
+  })
   specialist!: Specialist;
 
   @Column({ type: "nvarchar", length: 64, nullable: false })
@@ -35,4 +37,7 @@ export class Service {
 
   @Column({ type: "float", nullable: false })
   price!: number;
+
+  @Column({ type: "boolean", nullable: false, default: true })
+  active!: number;
 }

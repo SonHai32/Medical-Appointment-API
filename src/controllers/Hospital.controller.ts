@@ -46,12 +46,12 @@ export const _add = async (req: Request, res: Response) => {
     const newHospital: Hospital = req.body.data;
     const result: Hospital | undefined = await hospitalDao.add(newHospital);
     if (result) {
-      res.status(OK).json({ message: ResponseMessage.INSERT_SUCCESS });
+      res.status(OK).json(result);
     } else {
       throw new Error(ResponseMessage.INSERT_FAIL);
     }
   } catch (error) {
-    res.status(BAD_REQUEST).json({ message: (error as Error).message });
+    res.status(BAD_REQUEST).send((error as Error).message);
   }
 };
 

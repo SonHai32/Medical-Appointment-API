@@ -26,7 +26,7 @@ export const _getAll = async (req: Request, res: Response) => {
   try {
     const result: Shift[] | undefined = await shiftDao.getAll();
     if (result) {
-      res.status(OK).json({ data: result });
+      res.status(OK).json(result);
     } else {
       throw new Error(ResponseMessage.GET_FAIL);
     }

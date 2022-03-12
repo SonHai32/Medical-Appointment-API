@@ -1,3 +1,4 @@
+import { User } from "./../entity/User.entity";
 import { UpdateResult } from "typeorm";
 import { getRepository } from "typeorm";
 import { DeleteResult } from "typeorm";
@@ -37,4 +38,11 @@ export class PatientScheduleDao implements IPatientScheduleDao {
   getAll(): Promise<PatientSchedule[]> | undefined {
     return getRepository(PatientSchedule).find();
   }
+
+  // getAllByUser(userId: string) {
+  //   return getRepository(User).find<User>({
+  //     where: { id: userId },
+  //     relations: ["patientRecord", "patientRecord.patientSchedule"],
+  //   });
+  // }
 }

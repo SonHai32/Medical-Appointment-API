@@ -16,7 +16,7 @@ export class ShiftDao implements IShiftDao {
   }
 
   update(shift: Shift): Promise<UpdateResult> | undefined {
-    return getRepository(Shift).createQueryBuilder().update(shift).execute()
+    return getRepository(Shift).createQueryBuilder().update(shift).execute();
   }
 
   delete(listID: string[]): Promise<DeleteResult> | undefined {
@@ -28,6 +28,8 @@ export class ShiftDao implements IShiftDao {
   }
 
   getAll(): Promise<Shift[]> | undefined {
-    return getRepository(Shift).find();
+    return getRepository(Shift).find({
+      relations: ["room", "room.hospital", "doctor"],
+    });
   }
 }

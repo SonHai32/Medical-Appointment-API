@@ -31,7 +31,7 @@ export class PatientSchedule {
   time!: string;
 
   @Column({ type: "nvarchar", length: 300, nullable: true })
-  note!: string | null;
+  room!: string | null;
 
   @Column({ type: "boolean", nullable: false, default: true })
   active!: boolean;

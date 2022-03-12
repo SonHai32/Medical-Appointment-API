@@ -10,6 +10,15 @@ const { BAD_REQUEST, OK, UNAUTHORIZED } = httpStatusCodes;
 const userDao = new UserDao();
 const refreshTokenDao = new RefreshTokenDao();
 
+export const _logout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("refreshToken");
+    res.status(OK).send("LOGOUT");
+  } catch (error) {
+    res.status(UNAUTHORIZED).send((error as Error).message);
+  }
+};
+
 export const _login = async (req: Request, res: Response) => {
   try {
     const username = req.body.username;
@@ -23,14 +32,14 @@ export const _login = async (req: Request, res: Response) => {
         if (saveTokenResult) {
           responseToken(res, accessToken, refreshToken, "BOTH");
         } else {
-          throw new Error("Can not to save refresh token");
+          throw new Error("Có lỗi xảy ra, vui lòng thử lại sau");
         }
       }
     } else {
       throw new Error("Missing username or password");
     }
   } catch (error) {
-    res.status(UNAUTHORIZED).json({ message: (error as Error).message });
+    res.status(UNAUTHORIZED).send((error as Error).message);
   }
 };
 
@@ -46,14 +55,14 @@ export const _register = async (req: Request, res: Response) => {
         if (saveTokenResult) {
           responseToken(res, accessToken, refreshToken, "BOTH");
         } else {
-          throw new Error("Can not to save refresh token");
+          throw new Error("Có lỗi xảy ra, vui lòng thử lại sau");
         }
       }
     } else {
       throw new Error("Missing user");
     }
   } catch (error) {
-    res.status(UNAUTHORIZED).json({ message: (error as Error).message });
+    res.status(UNAUTHORIZED).send((error as Error).message);
   }
 };
 
@@ -77,7 +86,7 @@ export const _getUserWithToken = async (req: Request, res: Response) => {
 
 export const _refreshToken = (req: Request, res: Response) => {
   try {
-    const {refreshToken} = req.cookies;
+    const { refreshToken } = req.cookies;
     console.log(req.cookies);
     const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -97,7 +106,7 @@ export const _refreshToken = (req: Request, res: Response) => {
         }
       });
     } else {
-      throw new Error('not found token')
+      throw new Error("not found token");
     }
   } catch (error) {
     // console.log(error);
@@ -138,7 +147,7 @@ const responseToken = (
       });
     }
   } catch (error) {
-    res.status(UNAUTHORIZED);
+    res.status(UNAUTHORIZED).send((error as Error).message);
   }
 };
 

@@ -43,15 +43,20 @@ export class UserDao implements IUserDao {
     }
   }
 
-  public async register(user: User): Promise<User | undefined> {
+  async register(user: User): Promise<User | undefined> {
     try {
-      const hashPassword = await bcrypt.hash(user.password, 10);
-      if (hashPassword) {
-        user.password = hashPassword;
-        return getRepository(User).save(user);
-      } else {
-        throw new Error("Error while encrypting password");
-      }
+      const usernameExisted = await getRepository(User).findOne({
+        where: { username: user.username },
+      });
+      if (!usernameExisted) {
+        const hashPassword = await bcrypt.hash(user.password, 10);
+        if (hashPassword) {
+          user.password = hashPassword;
+          return getRepository(User).save(user);
+        } else {
+          throw new Error("Có lỗi xảy ra trong quá trình khởi tạo mật khẩu");
+        }
+      } else throw new Error("Tên tài khoản đã tồn tại");
     } catch (error) {
       throw error;
     }
@@ -59,7 +64,17 @@ export class UserDao implements IUserDao {
 
   public getAll(): Promise<User[]> | undefined {
     try {
-      return getRepository(User).find();
+      return getRepository(User).find({
+        select: [
+          "fullname",
+          "createdAt",
+          "emailAddress",
+          "active",
+          "phoneNumber",
+          "username",
+          "id",
+        ],
+      });
     } catch (error) {
       throw error;
     }
@@ -86,6 +101,15 @@ export class UserDao implements IUserDao {
             "phoneNumber",
             "username",
             "id",
+            "patientRecord",
+          ],
+          relations: [
+            "patientRecord",
+            "patientRecord.patientSchedule",
+            "patientRecord.patientSchedule.patientRecord",
+            "patientRecord.patientSchedule.service",
+            "patientRecord.patientSchedule.service.hospital",
+            "patientRecord.patientSchedule.service.specialist",
           ],
         }
       );
@@ -124,13 +148,13 @@ export class UserDao implements IUserDao {
           if (isPasswordValid) {
             return user;
           } else {
-            throw new Error("Wrong password");
+            throw new Error("Đăng nhập thất bại, mật khẩu sai");
           }
         } else {
-          throw new Error("User has been disabled");
+          throw new Error("Tài khoản không còn khả dụng");
         }
       } else {
-        throw new Error("Username doesn't exist ");
+        throw new Error("Tài khoản không tồn tại vui lòng kiểm tra");
       }
     } catch (error) {
       throw error;
@@ -138,8 +162,7 @@ export class UserDao implements IUserDao {
   }
 
   public update = async (user: User): Promise<User | undefined> => {
-    const currentUser = await getRepository(User).findOne({ id: user.id });
-    return getRepository(User).save({ ...currentUser, ...user });
+    return getRepository(User).save(user);
   };
 
   public async changePassword(

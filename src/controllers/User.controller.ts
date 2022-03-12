@@ -22,10 +22,7 @@ export const _register = async (req: Request, res: Response) => {
   }
 };
 
-export const _update = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const _update = async (req: Request, res: Response): Promise<void> => {
   try {
     const user: User = req.body;
     const result: User | undefined = await userDao.update(user);
@@ -35,9 +32,7 @@ export const _update = async (
       throw new Error("Update fail");
     }
   } catch (error) {
-    res
-      .status(BAD_REQUEST)
-      .json({ status: "FAIL", message: (error as Error).message });
+    res.status(BAD_REQUEST).send((error as Error).message);
   }
 };
 
@@ -70,15 +65,12 @@ export const _getAll = async (req: Request, res: Response): Promise<void> => {
   try {
     const users: User[] | undefined = await userDao.getAll();
     if (users) {
-      res.status(OK).json({ status: "SUCCESS", users });
+      res.status(OK).json(users);
     } else {
       throw new Error("No user from database");
     }
   } catch (error) {
-    res.status(BAD_REQUEST).json({
-      status: "FAIL",
-      message: (error as Error).message,
-    });
+    res.status(BAD_REQUEST).send((error as Error).message);
   }
 };
 
